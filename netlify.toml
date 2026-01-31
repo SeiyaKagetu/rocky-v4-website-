@@ -1,41 +1,20 @@
-# Netlify Configuration
-# Rocky Linux v4.0 Commercial Website
+# Netlify設定ファイル
+# Rocky Linux v4.0 Webサイト
 
 [build]
-  # 静的サイトなのでビルドコマンド不要
-  publish = "."
+  # ビルドコマンド（静的サイトなので不要）
   command = ""
+  # 公開ディレクトリ
+  publish = "."
+  # Functions ディレクトリ
+  functions = "netlify/functions"
 
-# Netlify Forms設定
-# フォーム送信時の通知先メールアドレス
-# ダッシュボードからも設定可能
-# 通知先: myseiyakagetu@proton.me
+# 環境変数（Netlify Dashboard で設定）
+# PAYPAL_CLIENT_ID = "AfhiZfLQ_sGwPqWukUF"
+# PAYPAL_CLIENT_SECRET = "AfhiZfLQ_sGwPqWukUFySk6n95qB6Ynvee-KAnk6doSR--2xJin97tMqjDzVJDPVH7q7Iypg599dnoXP"
 
+# リダイレクト設定（オプション）
 [[redirects]]
-  # indexページへのリダイレクト（404対策）
-  from = "/*"
-  to = "/index.html"
-  status = 404
-
-[[headers]]
-  # セキュリティヘッダー
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    # CSP（Content Security Policy）- 外部スクリプト実行制限
-    Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; script-src 'self'; connect-src 'self';"
-
-[[headers]]
-  # CSSファイルのキャッシュ
-  for = "/css/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  # HTMLファイルのキャッシュ（短め）
-  for = "/*.html"
-  [headers.values]
-    Cache-Control = "public, max-age=3600, must-revalidate"
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

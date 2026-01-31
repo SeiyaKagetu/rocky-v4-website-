@@ -47,7 +47,8 @@
                         <li>ライセンス認証</li>
                         <li>アップデート無料</li>
                     </ul>
-                    <a href="contact.html" class="btn btn-primary" style="width: 100%;">お問い合わせ</a>
+                    <!-- PayPalボタン（スタートアップ） -->
+                    <div id="paypal-button-startup" style="margin-top: 1rem;"></div>
                 </div>
 
                 <!-- スタンダードプラン（人気） -->
@@ -66,7 +67,8 @@
                         <li>API アクセス</li>
                         <li>優先サポート</li>
                     </ul>
-                    <a href="contact.html" class="btn btn-primary" style="width: 100%; background: var(--primary-color); color: white;">お問い合わせ</a>
+                    <!-- PayPalボタン（スタンダード） -->
+                    <div id="paypal-button-standard" style="margin-top: 1rem;"></div>
                 </div>
 
                 <!-- エンタープライズプラン -->
@@ -87,7 +89,8 @@
                         <li>セキュリティ監査</li>
                         <li>カスタム開発対応</li>
                     </ul>
-                    <a href="contact.html" class="btn btn-primary" style="width: 100%;">お問い合わせ</a>
+                    <!-- PayPalボタン（エンタープライズ） -->
+                    <div id="paypal-button-enterprise" style="margin-top: 1rem;"></div>
                 </div>
             </div>
 
@@ -271,5 +274,121 @@
             </div>
         </div>
     </footer>
+
+    <!-- PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AfhiZfLQ_sGwPqWukUF&currency=JPY"></script>
+
+    <!-- PayPal統合スクリプト -->
+    <script>
+        // 料金プラン定義
+        const plans = {
+            startup: {
+                name: 'スタートアップ',
+                amount: '100000',
+                elementId: 'paypal-button-startup'
+            },
+            standard: {
+                name: 'スタンダード',
+                amount: '500000',
+                elementId: 'paypal-button-standard'
+            },
+            enterprise: {
+                name: 'エンタープライズ',
+                amount: '2000000',
+                elementId: 'paypal-button-enterprise'
+            }
+        };
+
+        // 各プランのPayPalボタンを生成
+        Object.keys(plans).forEach(planKey => {
+            const plan = plans[planKey];
+
+            paypal.Buttons({
+                style: {
+                    layout: 'vertical',
+                    color: 'blue',
+                    shape: 'rect',
+                    label: 'pay'
+                },
+
+                // 注文作成
+                createOrder: async function(data, actions) {
+                    try {
+                        // Netlify Functionを呼び出し
+                        const response = await fetch('/.netlify/functions/create-paypal-order', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                plan: plan.name,
+                                amount: plan.amount
+                            })
+                        });
+
+                        const orderData = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(orderData.error || 'Failed to create order');
+                        }
+
+                        return orderData.id;
+                    } catch (error) {
+                        console.error('Order creation error:', error);
+                        alert('注文の作成に失敗しました: ' + error.message);
+                    }
+                },
+
+                // 支払い承認後
+                onApprove: async function(data, actions) {
+                    try {
+                        // Netlify Functionを呼び出して支払いを確定
+                        const response = await fetch('/.netlify/functions/capture-paypal-order', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                orderID: data.orderID
+                            })
+                        });
+
+                        const captureData = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(captureData.error || 'Failed to capture payment');
+                        }
+
+                        // 成功メッセージ
+                        alert(
+                            '✅ お支払いが完了しました！\n\n' +
+                            'プラン: ' + plan.name + '\n' +
+                            '金額: ¥' + parseInt(plan.amount).toLocaleString() + '\n' +
+                            '取引ID: ' + captureData.id + '\n\n' +
+                            '詳細はメールでお送りします。'
+                        );
+
+                        // お問い合わせページにリダイレクト
+                        window.location.href = '/contact.html?payment=success&plan=' + planKey;
+                    } catch (error) {
+                        console.error('Payment capture error:', error);
+                        alert('支払いの確定に失敗しました: ' + error.message);
+                    }
+                },
+
+                // エラー発生時
+                onError: function(err) {
+                    console.error('PayPal error:', err);
+                    alert('エラーが発生しました。もう一度お試しください。');
+                },
+
+                // キャンセル時
+                onCancel: function(data) {
+                    console.log('Payment cancelled:', data);
+                    alert('お支払いがキャンセルされました。');
+                }
+            }).render('#' + plan.elementId);
+        });
+    </script>
 </body>
 </html>

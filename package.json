@@ -1,0 +1,15 @@
+{
+  "name": "rocky-linux-v4-website",
+  "version": "1.0.0",
+  "description": "Rocky Linux v4.0 Commercial Website with PayPal Integration",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build required for static site'"
+  },
+  "dependencies": {
+    "@paypal/checkout-server-sdk": "^1.0.3"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}

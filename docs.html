@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rocky Linux v4.0 ドキュメント - セットアップガイド・API仕様">
+    <title>ドキュメント | Rocky Linux v4.0</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .doc-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .doc-content h2 {
+            color: var(--primary-color);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .doc-content h3 {
+            color: var(--text-primary);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .doc-content code {
+            background: #f3f4f6;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .doc-content pre {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .doc-content pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .toc {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .toc h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc ul li a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .toc ul li a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">🚀 Rocky Linux v4.0</a>
+            <ul class="nav-links">
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="pricing.html">料金プラン</a></li>
+                <li><a href="docs.html">ドキュメント</a></li>
+                <li><a href="contact.html">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ページタイトル -->
+    <section class="hero" style="padding: 4rem 0;">
+        <div class="container">
+            <h1>ドキュメント</h1>
+            <p class="subtitle">セットアップガイド・使い方・API仕様</p>
+        </div>
+    </section>
+
+    <!-- ドキュメント本文 -->
+    <section class="features">
+        <div class="container">
+            <div class="doc-content">
+                <!-- 目次 -->
+                <div class="toc">
+                    <h3>📑 目次</h3>
+                    <ul>
+                        <li><a href="#quickstart">1. クイックスタート</a></li>
+                        <li><a href="#installation">2. インストール</a></li>
+                        <li><a href="#basic-usage">3. 基本的な使い方</a></li>
+                        <li><a href="#license">4. ライセンス認証</a></li>
+                        <li><a href="#optimization">5. 最適化の適用</a></li>
+                        <li><a href="#api">6. API仕様</a></li>
+                        <li><a href="#troubleshooting">7. トラブルシューティング</a></li>
+                    </ul>
+                </div>
+
+                <!-- クイックスタート -->
+                <h2 id="quickstart">1. クイックスタート</h2>
+                <p>Rocky Linux v4.0を5分で始める方法</p>
+
+                <h3>前提条件</h3>
+                <ul>
+                    <li>Rocky Linux 10.1 (Peridot) または互換OS</li>
+                    <li>Python 3.12以上</li>
+                    <li>インターネット接続（ライセンス認証に必須）</li>
+                    <li>root権限またはsudo権限</li>
+                </ul>
+
+                <h3>最速セットアップ</h3>
+                <pre><code># 1. 環境変数にライセンスキーを設定
+export NOVE_LICENSE_KEY="XXXX-XXXX-XXXX-XXXX"
+
+# 2. システム実行
+./scripts/launchers/run_adaptive_system_v4.sh
+
+# 3. 結果確認（5秒で完了）
+cat data/adaptive_system_v4/adaptive_report_v4_*.txt</code></pre>
+
+                <!-- インストール -->
+                <h2 id="installation">2. インストール</h2>
+
+                <h3>必要パッケージのインストール</h3>
+                <pre><code># Rocky Linux 10.1の場合
+sudo dnf install python3 python3-pip sysbench tuned perf -y
+
+# Python依存関係
+pip3 install --user multiprocessing</code></pre>
+
+                <h3>ライセンス認証サーバー接続確認</h3>
+                <pre><code># サーバー状態確認
+curl https://license.yourdomain.com/api/v1/status
+
+# 期待される出力:
+# {"status":"online","timestamp":"2026-01-31T09:00:00","version":"1.0.0"}</code></pre>
+
+                <!-- 基本的な使い方 -->
+                <h2 id="basic-usage">3. 基本的な使い方</h2>
+
+                <h3>基本実行（完全分析）</h3>
+                <pre><code>./scripts/launchers/run_adaptive_system_v4.sh</code></pre>
+
+                <h3>高速モード（分析のみ）</h3>
+                <pre><code>./scripts/launchers/run_adaptive_system_v4.sh --fast-mode</code></pre>
+
+                <h3>レポート確認</h3>
+                <pre><code># 最新レポート表示
+cat $(ls -t data/adaptive_system_v4/adaptive_report_v4_*.txt | head -1)
+
+# JSONレポート表示
+cat $(ls -t data/adaptive_system_v4/adaptive_report_v4_*.json | head -1) | jq .</code></pre>
+
+                <!-- ライセンス認証 -->
+                <h2 id="license">4. ライセンス認証</h2>
+
+                <h3>ライセンスキーの設定</h3>
+                <pre><code># 環境変数で設定（推奨）
+export NOVE_LICENSE_KEY="XXXX-XXXX-XXXX-XXXX"
+
+# 永続化（.bashrcに追加）
+echo 'export NOVE_LICENSE_KEY="XXXX-XXXX-XXXX-XXXX"' >> ~/.bashrc
+source ~/.bashrc</code></pre>
+
+                <h3>認証状態の確認</h3>
+                <pre><code># システム実行時に自動で認証されます
+./scripts/launchers/run_adaptive_system_v4.sh
+
+# 成功時の出力:
+# ✅ ライセンス認証成功
+#    プラン: スタンダード
+#    有効期限: 2027-01-31
+#    最大サーバー数: 500</code></pre>
+
+                <h3>認証エラーの対処</h3>
+                <ul>
+                    <li><strong>ライセンスキーが無効</strong> → キーを確認、サポートへ連絡</li>
+                    <li><strong>別のデバイスで使用中</strong> → 1ライセンス=1デバイスの制限</li>
+                    <li><strong>期限切れ</strong> → 契約更新が必要</li>
+                    <li><strong>停止中</strong> → サポートへ連絡</li>
+                </ul>
+
+                <!-- 最適化の適用 -->
+                <h2 id="optimization">5. 最適化の適用</h2>
+
+                <h3>推奨される最適化の確認</h3>
+                <p>システム実行後、最適化スクリプトが自動生成されます：</p>
+                <pre><code># 最適化スクリプトの場所
+data/adaptive_system_v4/optimization_script_v4_*.sh</code></pre>
+
+                <h3>最適化の適用</h3>
+                <pre><code># 最新の最適化スクリプトを実行
+sudo bash $(ls -t data/adaptive_system_v4/optimization_script_v4_*.sh | head -1)</code></pre>
+
+                <h3>最適化前後の比較</h3>
+                <pre><code># 最適化前
+./scripts/launchers/run_adaptive_system_v4.sh
+# スコア記録
+
+# 最適化適用
+sudo bash data/adaptive_system_v4/optimization_script_v4_*.sh
+
+# 最適化後
+./scripts/launchers/run_adaptive_system_v4.sh
+# スコア改善を確認</code></pre>
+
+                <!-- API仕様 -->
+                <h2 id="api">6. API仕様</h2>
+
+                <h3>ライセンス認証API</h3>
+                <pre><code>POST https://license.yourdomain.com/api/v1/validate
+Content-Type: application/json
+
+{
+  "license_key": "XXXX-XXXX-XXXX-XXXX",
+  "device_id": "abc123...",
+  "timestamp": "2026-01-31T09:00:00",
+  "product": "Rocky Linux v4.0",
+  "version": "4.0.0"
+}
+
+Response:
+{
+  "valid": true,
+  "message": "認証成功",
+  "tier": "standard",
+  "max_servers": 500,
+  "expires_at": "2027-01-31T09:00:00"
+}</code></pre>
+
+                <h3>使用統計送信API</h3>
+                <pre><code>POST https://license.yourdomain.com/api/v1/usage
+Content-Type: application/json
+
+{
+  "license_key": "XXXX-XXXX-XXXX-XXXX",
+  "total_score": 689,
+  "execution_time": 5.3
+}
+
+Response:
+{
+  "status": "success"
+}</code></pre>
+
+                <!-- トラブルシューティング -->
+                <h2 id="troubleshooting">7. トラブルシューティング</h2>
+
+                <h3>Q1: ライセンス認証に失敗する</h3>
+                <p><strong>原因</strong>: インターネット接続、無効なキー、期限切れ</p>
+                <p><strong>対処</strong>:</p>
+                <pre><code># 1. ネットワーク確認
+curl https://license.yourdomain.com/api/v1/status
+
+# 2. ライセンスキー確認
+echo $NOVE_LICENSE_KEY
+
+# 3. サポートへ連絡
+# Email: seiya@example.com</code></pre>
+
+                <h3>Q2: スコアが低い</h3>
+                <p><strong>原因</strong>: システム設定が最適化されていない</p>
+                <p><strong>対処</strong>:</p>
+                <pre><code># 自動生成された最適化スクリプトを適用
+sudo bash data/adaptive_system_v4/optimization_script_v4_*.sh
+
+# 再度測定
+./scripts/launchers/run_adaptive_system_v4.sh</code></pre>
+
+                <h3>Q3: GPU検出されない</h3>
+                <p><strong>原因</strong>: GPU未搭載、またはドライバ未インストール</p>
+                <p><strong>対処</strong>: GPU未搭載でも50/100確保されるため問題なし。搭載している場合はドライバをインストール。</p>
+
+                <h3>Q4: 実行時間が長い</h3>
+                <p><strong>原因</strong>: 完全分析モード</p>
+                <p><strong>対処</strong>:</p>
+                <pre><code># 高速モードを使用
+./scripts/launchers/run_adaptive_system_v4.sh --fast-mode</code></pre>
+
+                <!-- サポート -->
+                <h2>📞 サポート</h2>
+                <p>ご不明な点がございましたら、お気軽にお問い合わせください。</p>
+                <ul>
+                    <li><strong>メール</strong>: seiya@example.com</li>
+                    <li><strong>営業時間</strong>: 平日 9:00-18:00</li>
+                    <li><strong>緊急サポート</strong>: スタンダード以上のプランで24時間対応</li>
+                </ul>
+
+                <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: #dbeafe; border-radius: 12px;">
+                    <h3 style="color: #1e40af; margin-bottom: 1rem;">詳細ドキュメント</h3>
+                    <p style="color: #1e3a8a;">
+                        完全なAPI仕様、開発者ガイド、トラブルシューティングなどの<br>
+                        詳細ドキュメントは契約後に提供いたします。
+                    </p>
+                    <a href="contact.html" class="btn btn-primary" style="margin-top: 1rem;">お問い合わせ</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Rocky Linux v4.0</h3>
+                    <p style="color: rgba(255,255,255,0.8);">
+                        世界最高峰のLinux性能最適化システム<br>
+                        699/700点達成
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>製品</h3>
+                    <ul>
+                        <li><a href="pricing.html">料金プラン</a></li>
+                        <li><a href="docs.html">ドキュメント</a></li>
+                        <li><a href="#">API仕様</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>サポート</h3>
+                    <ul>
+                        <li><a href="contact.html">お問い合わせ</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">技術サポート</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>会社情報</h3>
+                    <ul>
+                        <li><a href="#">運営者情報</a></li>
+                        <li><a href="#">利用規約</a></li>
+                        <li><a href="#">プライバシーポリシー</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 清也 (Seiya) - Rocky Linux Adaptive Performance System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

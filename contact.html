@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rocky Linux v4.0 お問い合わせ - 無料相談受付中">
+    <title>お問い合わせ | Rocky Linux v4.0</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .required {
+            color: var(--danger-color);
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .contact-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">🚀 Rocky Linux v4.0</a>
+            <ul class="nav-links">
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="pricing.html">料金プラン</a></li>
+                <li><a href="docs.html">ドキュメント</a></li>
+                <li><a href="contact.html">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ページタイトル -->
+    <section class="hero" style="padding: 4rem 0;">
+        <div class="container">
+            <h1>お問い合わせ</h1>
+            <p class="subtitle">お気軽にご相談ください</p>
+        </div>
+    </section>
+
+    <!-- 連絡先情報 -->
+    <section class="features">
+        <div class="container">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <div class="contact-card-icon">📧</div>
+                    <h3>メール</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">お問い合わせはこちら</p>
+                    <a href="mailto:seiya@example.com" style="color: var(--primary-color); font-weight: 600;">seiya@example.com</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-card-icon">⏰</div>
+                    <h3>営業時間</h3>
+                    <p style="color: var(--text-secondary);">
+                        平日 9:00 - 18:00<br>
+                        （土日祝日は休業）
+                    </p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-card-icon">📞</div>
+                    <h3>サポート</h3>
+                    <p style="color: var(--text-secondary);">
+                        スタンダード以上のプランで<br>
+                        24時間サポート対応
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- お問い合わせフォーム -->
+    <section class="features" style="background: white;">
+        <div class="container">
+            <h2 class="section-title">お問い合わせフォーム</h2>
+
+            <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-group">
+                    <label for="company">会社名 <span class="required">*</span></label>
+                    <input type="text" id="company" name="company" required placeholder="株式会社サンプル">
+                </div>
+
+                <div class="form-group">
+                    <label for="name">お名前 <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required placeholder="山田 太郎">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">メールアドレス <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required placeholder="sample@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">電話番号</label>
+                    <input type="tel" id="phone" name="phone" placeholder="03-1234-5678">
+                </div>
+
+                <div class="form-group">
+                    <label for="plan">ご興味のあるプラン <span class="required">*</span></label>
+                    <select id="plan" name="plan" required>
+                        <option value="">選択してください</option>
+                        <option value="startup">スタートアップ（¥100,000/月）</option>
+                        <option value="standard">スタンダード（¥500,000/月）</option>
+                        <option value="enterprise">エンタープライズ（¥2,000,000/月）</option>
+                        <option value="beta">ベータテスト（3ヶ月無料）</option>
+                        <option value="other">その他・相談</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="servers">想定サーバー台数</label>
+                    <input type="number" id="servers" name="servers" min="1" placeholder="50">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">お問い合わせ内容 <span class="required">*</span></label>
+                    <textarea id="message" name="message" required placeholder="お問い合わせ内容をご記入ください"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem;">送信する</button>
+
+                <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-secondary); text-align: center;">
+                    送信いただいた情報は、お問い合わせ対応のみに使用し、第三者に提供することはありません。
+                </p>
+            </form>
+
+            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: #dbeafe; border-radius: 12px;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: #1e40af;">📧 お問い合わせ対応時間</h3>
+                <p style="font-size: 1.1rem; color: #1e3a8a;">
+                    通常、1営業日以内に返信いたします。<br>
+                    緊急の場合は、メールにその旨をご記載ください。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ベータテスト案内 -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">🎉 ベータテストプログラム</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="feature-card">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">現在募集中：最初の5社様限定</h3>
+                    <p style="margin-bottom: 1rem;">
+                        Rocky Linux v4.0の正式リリース前に、実際の運用環境でお試しいただける<br>
+                        ベータテストプログラムにご参加いただける企業様を募集しています。
+                    </p>
+                    <ul style="list-style: none; text-align: left; margin-bottom: 1.5rem;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">✓ 3ヶ月間無料でご利用可能（¥300,000-6,000,000相当）</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">✓ 専任エンジニアによる導入・運用サポート</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">✓ 正式版リリース後、初年度50%割引</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">✓ 導入事例として貴社名を掲載（任意）</li>
+                        <li style="padding: 0.5rem 0;">✓ 製品開発へのフィードバック反映</li>
+                    </ul>
+                    <p style="font-weight: 600; color: var(--primary-color);">
+                        参加条件：Linux サーバーを10台以上運用している企業様
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Rocky Linux v4.0</h3>
+                    <p style="color: rgba(255,255,255,0.8);">
+                        世界最高峰のLinux性能最適化システム<br>
+                        699/700点達成
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>製品</h3>
+                    <ul>
+                        <li><a href="pricing.html">料金プラン</a></li>
+                        <li><a href="docs.html">ドキュメント</a></li>
+                        <li><a href="#">API仕様</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>サポート</h3>
+                    <ul>
+                        <li><a href="contact.html">お問い合わせ</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">技術サポート</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>会社情報</h3>
+                    <ul>
+                        <li><a href="#">運営者情報</a></li>
+                        <li><a href="#">利用規約</a></li>
+                        <li><a href="#">プライバシーポリシー</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 清也 (Seiya) - Rocky Linux Adaptive Performance System. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

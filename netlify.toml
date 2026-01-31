@@ -1,0 +1,36 @@
+# Netlify Configuration
+# Rocky Linux v4.0 Commercial Website
+
+[build]
+  # 静的サイトなのでビルドコマンド不要
+  publish = "."
+  command = ""
+
+[[redirects]]
+  # indexページへのリダイレクト（404対策）
+  from = "/*"
+  to = "/index.html"
+  status = 404
+
+[[headers]]
+  # セキュリティヘッダー
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # CSP（Content Security Policy）- 外部スクリプト実行制限
+    Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; script-src 'self' https://formspree.io; connect-src 'self' https://formspree.io;"
+
+[[headers]]
+  # CSSファイルのキャッシュ
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  # HTMLファイルのキャッシュ（短め）
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"

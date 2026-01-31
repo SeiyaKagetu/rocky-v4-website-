@@ -47,8 +47,18 @@
                         <li>ライセンス認証</li>
                         <li>アップデート無料</li>
                     </ul>
-                    <!-- PayPalボタン（スタートアップ） -->
-                    <div id="paypal-button-startup" style="margin-top: 1rem;"></div>
+                    <!-- 決済方法選択 -->
+                    <div style="margin-top: 1rem;">
+                        <p style="text-align: center; color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">お支払い方法を選択</p>
+                        <!-- PayPalボタン -->
+                        <div id="paypal-button-startup"></div>
+                        <!-- 区切り -->
+                        <div style="text-align: center; margin: 0.5rem 0; color: #9ca3af;">または</div>
+                        <!-- Stripeボタン -->
+                        <button class="stripe-button" data-plan="startup" data-amount="100000" data-plan-name="スタートアップ">
+                            💳 クレジットカード決済（Stripe）
+                        </button>
+                    </div>
                 </div>
 
                 <!-- スタンダードプラン（人気） -->
@@ -67,8 +77,18 @@
                         <li>API アクセス</li>
                         <li>優先サポート</li>
                     </ul>
-                    <!-- PayPalボタン（スタンダード） -->
-                    <div id="paypal-button-standard" style="margin-top: 1rem;"></div>
+                    <!-- 決済方法選択 -->
+                    <div style="margin-top: 1rem;">
+                        <p style="text-align: center; color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">お支払い方法を選択</p>
+                        <!-- PayPalボタン -->
+                        <div id="paypal-button-standard"></div>
+                        <!-- 区切り -->
+                        <div style="text-align: center; margin: 0.5rem 0; color: #9ca3af;">または</div>
+                        <!-- Stripeボタン -->
+                        <button class="stripe-button" data-plan="standard" data-amount="500000" data-plan-name="スタンダード">
+                            💳 クレジットカード決済（Stripe）
+                        </button>
+                    </div>
                 </div>
 
                 <!-- エンタープライズプラン -->
@@ -89,8 +109,18 @@
                         <li>セキュリティ監査</li>
                         <li>カスタム開発対応</li>
                     </ul>
-                    <!-- PayPalボタン（エンタープライズ） -->
-                    <div id="paypal-button-enterprise" style="margin-top: 1rem;"></div>
+                    <!-- 決済方法選択 -->
+                    <div style="margin-top: 1rem;">
+                        <p style="text-align: center; color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">お支払い方法を選択</p>
+                        <!-- PayPalボタン -->
+                        <div id="paypal-button-enterprise"></div>
+                        <!-- 区切り -->
+                        <div style="text-align: center; margin: 0.5rem 0; color: #9ca3af;">または</div>
+                        <!-- Stripeボタン -->
+                        <button class="stripe-button" data-plan="enterprise" data-amount="2000000" data-plan-name="エンタープライズ">
+                            💳 クレジットカード決済（Stripe）
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -389,6 +419,88 @@
                 }
             }).render('#' + plan.elementId);
         });
+
+        // Stripe統合スクリプト
+        // Stripeボタンのクリックイベント
+        document.addEventListener('DOMContentLoaded', function() {
+            const stripeButtons = document.querySelectorAll('.stripe-button');
+
+            stripeButtons.forEach(button => {
+                button.addEventListener('click', async function() {
+                    const plan = this.getAttribute('data-plan');
+                    const amount = this.getAttribute('data-amount');
+                    const planName = this.getAttribute('data-plan-name');
+
+                    // ボタンを無効化（多重クリック防止）
+                    this.disabled = true;
+                    this.textContent = '処理中...';
+
+                    try {
+                        // Netlify Functionを呼び出してStripe Checkout Session作成
+                        const response = await fetch('/.netlify/functions/create-stripe-checkout', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                plan: plan,
+                                amount: amount,
+                                planName: planName
+                            })
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(data.error || 'Failed to create checkout session');
+                        }
+
+                        // Stripe Checkoutページにリダイレクト
+                        window.location.href = data.url;
+                    } catch (error) {
+                        console.error('Stripe Checkout error:', error);
+                        alert('エラーが発生しました: ' + error.message);
+
+                        // ボタンを再度有効化
+                        this.disabled = false;
+                        this.textContent = '💳 クレジットカード決済（Stripe）';
+                    }
+                });
+            });
+        });
     </script>
+
+    <!-- Stripeボタン用スタイル -->
+    <style>
+        .stripe-button {
+            width: 100%;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #635bff 0%, #4f46e5 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(99, 91, 255, 0.2);
+        }
+
+        .stripe-button:hover {
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+            box-shadow: 0 4px 8px rgba(99, 91, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .stripe-button:active {
+            transform: translateY(0);
+        }
+
+        .stripe-button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+    </style>
 </body>
 </html>

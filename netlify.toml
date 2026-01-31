@@ -6,6 +6,11 @@
   publish = "."
   command = ""
 
+# Netlify Forms設定
+# フォーム送信時の通知先メールアドレス
+# ダッシュボードからも設定可能
+# 通知先: myseiyakagetu@proton.me
+
 [[redirects]]
   # indexページへのリダイレクト（404対策）
   from = "/*"
@@ -21,7 +26,7 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     # CSP（Content Security Policy）- 外部スクリプト実行制限
-    Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; script-src 'self' https://formspree.io; connect-src 'self' https://formspree.io;"
+    Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; script-src 'self'; connect-src 'self';"
 
 [[headers]]
   # CSSファイルのキャッシュ

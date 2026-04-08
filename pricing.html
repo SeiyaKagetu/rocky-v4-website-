@@ -248,6 +248,19 @@
         </div>
     </section>
 
+    <!-- 特別決済用（隠し機能） -->
+    <div id="secret-payment-section" style="display: none; margin: 4rem auto; max-width: 600px; padding: 2rem; background: #fff; border: 2px solid #635bff; border-radius: 16px; text-align: center; box-shadow: 0 10px 30px rgba(99, 91, 255, 0.1);">
+        <h3 style="color: #635bff; margin-bottom: 1rem;">💳 特別決済手続き（30,000円）</h3>
+        <p style="font-size: 0.9rem; color: #6e6e73; margin-bottom: 1.5rem;">
+            NOVE OS サービス提供一式の特別決済画面です。<br>
+            以下のボタンからクレジットカードで安全にお支払いいただけます。
+        </p>
+        <button id="btnSecretPay" style="background: linear-gradient(135deg, #635bff 0%, #4f46e5 100%); color: white; border: none; padding: 16px 40px; border-radius: 12px; font-weight: 700; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(99, 91, 255, 0.3);">
+            カードで支払う（¥30,000）
+        </button>
+        <p id="secret-pay-error" style="color: #f85149; font-size: 0.8rem; margin-top: 1rem; display: none;"></p>
+    </div>
+
     <!-- CTA -->
     <section class="hero" style="padding: 4rem 0;">
         <div class="container">
@@ -421,8 +434,54 @@
         });
 
         // Stripe統合スクリプト
-        // Stripeボタンのクリックイベント
+        // URLパラメータチェック（隠し支払い機能用）
         document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('pay') === '30k') {
+                const section = document.getElementById('secret-payment-section');
+                if (section) {
+                    section.style.display = 'block';
+                    // スクロールして表示
+                    section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+
+            // 隠しボタンのクリックイベント
+            const btnSecret = document.getElementById('btnSecretPay');
+            if (btnSecret) {
+                btnSecret.addEventListener('click', async function() {
+                    const errEl = document.getElementById('secret-pay-error');
+                    this.disabled = true;
+                    this.textContent = '処理中...';
+                    errEl.style.display = 'none';
+
+                    try {
+                        const response = await fetch('https://nove-infinity-project-production.up.railway.app/api/stripe/invoice-checkout', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                amount: 30000,
+                                description: 'NOVE OS サービス提供一式（特別決済）',
+                                success_url: 'https://noveos.jp/success.html',
+                                cancel_url: window.location.href
+                            })
+                        });
+
+                        const data = await response.json();
+                        if (data.url) {
+                            window.location.href = data.url;
+                        } else {
+                            throw new Error(data.detail || '決済URLの取得に失敗しました');
+                        }
+                    } catch (error) {
+                        errEl.textContent = '⚠️ ' + error.message;
+                        errEl.style.display = 'block';
+                        this.disabled = false;
+                        this.textContent = 'カードで支払う（¥30,000）';
+                    }
+                });
+            }
+
             const stripeButtons = document.querySelectorAll('.stripe-button');
 
             stripeButtons.forEach(button => {

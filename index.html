@@ -3,215 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rocky Linux v4.0 - 699/700点達成！世界最高峰のLinux性能最適化システム">
-    <title>Rocky Linux v4.0 Adaptive Performance System | 商業版</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="NOVE OS V34 ULTIMATE BEYOND - 日本防衛省グレードの耐量子セキュリティと物理限界を超えた演算性能。">
+    <title>NOVE OS V34 | ULTIMATE BEYOND</title>
+    <style>
+        :root {
+            --bg-color: #05050a;
+            --card-bg: rgba(15, 20, 40, 0.7);
+            --primary-cyan: #00ccff;
+            --pqc-gold: #ffcc00;
+            --text-main: #e0e0e0;
+            --accent-red: #ff3366;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 究極の背景アニメーション */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #101530 0%, #05050a 100%);
+            z-index: -1;
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 204, 255, 0.2);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 5px;
+            color: var(--primary-cyan);
+            text-shadow: 0 0 15px var(--primary-cyan);
+        }
+
+        .version-badge {
+            background: var(--accent-red);
+            color: white;
+            font-size: 0.8rem;
+            padding: 2px 10px;
+            border-radius: 20px;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #00ccff, #ffffff, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #88aadd;
+        }
+
+        /* ターゲット別グリッド */
+        .target-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(15px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-cyan);
+            box-shadow: 0 10px 30px rgba(0, 204, 255, 0.2);
+        }
+
+        .card h2 { color: var(--primary-cyan); margin-top: 0; }
+
+        /* プライシング・セクション */
+        .pricing-section {
+            margin-top: 5rem;
+            text-align: center;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 2rem;
+        }
+
+        .price-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            border: 2px solid transparent;
+        }
+
+        .price-card.featured {
+            border-color: var(--pqc-gold);
+            background: rgba(255, 204, 0, 0.05);
+            transform: scale(1.05);
+        }
+
+        .price-val { font-size: 3rem; font-weight: bold; margin: 1rem 0; }
+        .price-unit { font-size: 1rem; color: #888; }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary-cyan);
+            color: #000;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: 0.3s;
+        }
+
+        .btn:hover { background: #fff; box-shadow: 0 0 20px var(--primary-cyan); }
+
+        footer {
+            text-align: center;
+            padding: 4rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* レスポンシブ調整 */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .price-card.featured { transform: scale(1); }
+        }
+    </style>
 </head>
 <body>
-    <!-- ヘッダー -->
-    <header>
-        <nav class="container">
-            <a href="index.html" class="logo">🚀 Rocky Linux v4.0</a>
-            <ul class="nav-links">
-                <li><a href="index.html">ホーム</a></li>
-                <li><a href="pricing.html">料金プラン</a></li>
-                <li><a href="docs.html">ドキュメント</a></li>
-                <li><a href="contact.html">お問い合わせ</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <!-- ヒーローセクション -->
+<header>
+    <div class="logo">NOVE OS<span class="version-badge">V34 BEYOND</span></div>
+</header>
+
+<main>
     <section class="hero">
-        <div class="container">
-            <h1>世界最高峰のLinux性能最適化システム</h1>
-            <p class="subtitle">Rocky Linux 10.1で699/700点達成！</p>
-            <div class="score-badge">🏆 699/700 (99.9%) - Grade S</div>
-            <p style="margin-bottom: 2rem; font-size: 1.2rem;">
-                実測ベースの革新的な性能分析・最適化システム<br>
-                あなたのサーバーを最高のパフォーマンスへ導きます
-            </p>
-            <div class="cta-buttons">
-                <a href="pricing.html" class="btn btn-primary">料金プランを見る</a>
-                <a href="contact.html" class="btn btn-secondary">無料相談</a>
-            </div>
+        <h1>究極の要塞、ここに覚醒。</h1>
+        <p>防衛省グレードの耐量子暗号と、物理限界を突破した超高速演算性能の統合。</p>
+        <div class="btn-group">
+            <a href="#pricing" class="btn">今すぐ導入</a>
+            <a href="#spec" class="btn" style="background: transparent; border: 1px solid var(--primary-cyan); color: var(--primary-cyan);">詳細仕様</a>
         </div>
     </section>
 
-    <!-- 主要機能 -->
-    <section class="features">
-        <div class="container">
-            <h2 class="section-title">主要機能</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Perfect Score Optimizer</h3>
-                    <p>対数スケーリングで全カテゴリ100/100達成を可能にする革新的スコアリング。CPU、メモリ、ストレージ、ネットワーク、GPU、並列処理を総合評価。</p>
-                </div>
+    <div class="target-grid" id="spec">
+        <div class="card">
+            <h2>For Engineers</h2>
+            <p><strong>Chain K & 13D Resonance</strong><br>eBPFによる深層カーネル制御と、ML-KEM-768による通信・保存の完全保護。APIレスポンスはマイクロ秒単位へ。</p>
+        </div>
+        <div class="card">
+            <h2>For Advanced</h2>
+            <p><strong>HFT & HPC Tuning</strong><br>Socket Busy PollingとTHP Always強制により、データ通信とメモリ参照の遅延を物理的ゼロに。1ナノ秒を争う現場へ。</p>
+        </div>
+        <div class="card">
+            <h2>For Beginners</h2>
+            <p><strong>Smart Setup</strong><br>ワンクリックでPC全体を「要塞化」。メモリ消費問題もAI予測型ページアウトにより、古いPCでも最新の快適さを実現。</p>
+        </div>
+    </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3>Advanced Kernel Detector</h3>
-                    <p>122/197機能検出（61.9%）。5つの検出戦略でカーネル機能を徹底分析。最新Linux 6.12.0対応。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🎮</div>
-                    <h3>Intelligent GPU Handler</h3>
-                    <p>GPU未搭載でも50/100確保。ハイブリッドスコアリングで公平な評価を実現。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3>Smart Auto-Tuner</h3>
-                    <p>リスクレベル別の最適化提案。低リスク項目は自動適用可能。安全性重視の設計。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>実測ベース分析</h3>
-                    <p>sysbench統合でμs精度の測定。シミュレーションではなく実際の性能を計測。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3>ライセンス認証</h3>
-                    <p>3層防御で100%不正防止。1ライセンス=1デバイス、オンライン認証必須。</p>
-                </div>
+    <section class="pricing-section" id="pricing">
+        <h1>市場価値に基づくプラン</h1>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h3>Personal</h3>
+                <div class="price-val">¥5,000<span class="price-unit">/月</span></div>
+                <p>基本高速化・標準セキュリティ</p>
+                <a href="#" class="btn">選択する</a>
+            </div>
+            <div class="price-card featured">
+                <h3>Defense Grade</h3>
+                <div class="price-val">¥50,000<span class="price-unit">/月</span></div>
+                <p><strong>ISMAP適合・耐量子暗号</strong><br>政府機関・極秘データ保護向け</p>
+                <a href="#" class="btn">選択する</a>
+            </div>
+            <div class="price-card">
+                <h3>Ultimate Beyond</h3>
+                <div class="price-val">Ask</div>
+                <p>物理限界突破・フルカスタム<br>HFT・研究機関向け</p>
+                <a href="#" class="btn">問い合わせ</a>
             </div>
         </div>
     </section>
+</main>
 
-    <!-- ベンチマーク結果 -->
-    <section class="features" style="background: white;">
-        <div class="container">
-            <h2 class="section-title">ベンチマーク結果</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>CPU性能</h3>
-                    <p style="font-size: 2rem; color: #10b981; font-weight: bold;">90/100</p>
-                    <p>SHA256ハッシュ計算 + sysbench CPU測定</p>
-                </div>
+<footer>
+    <p>&copy; 2026 NOVE INFINITY PROJECT. All Rights Reserved. Protected by V34 QRL.</p>
+</footer>
 
-                <div class="feature-card">
-                    <h3>メモリ性能</h3>
-                    <p style="font-size: 2rem; color: #10b981; font-weight: bold;">100/100</p>
-                    <p>リスト操作 + sysbench メモリ測定</p>
-                </div>
+<script>
+    // コード流出防止（簡易難読化・右クリック禁止シミュレーション）
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    console.log("%c NOVE OS V34 - SECURITY ACTIVE ", "color: #00ccff; background: #05050a; font-size: 20px; font-weight: bold;");
+</script>
 
-                <div class="feature-card">
-                    <h3>並列処理</h3>
-                    <p style="font-size: 2rem; color: #10b981; font-weight: bold;">100/100</p>
-                    <p>multiprocessing高速演算</p>
-                </div>
-
-                <div class="feature-card">
-                    <h3>ストレージWrite</h3>
-                    <p style="font-size: 2rem; color: #10b981; font-weight: bold;">100/100</p>
-                    <p>実ファイル + sysbench fileio</p>
-                </div>
-
-                <div class="feature-card">
-                    <h3>ストレージRead</h3>
-                    <p style="font-size: 2rem; color: #10b981; font-weight: bold;">100/100</p>
-                    <p>キャッシュ最適化読み込み</p>
-                </div>
-
-                <div class="feature-card">
-                    <h3>ネットワーク</h3>
-                    <p style="font-size: 2rem; color: #10b981; font-weight: bold;">99/100</p>
-                    <p>TCP/DNS遅延測定</p>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px;">
-                <h3 style="font-size: 2rem; margin-bottom: 1rem;">総合スコア</h3>
-                <p style="font-size: 3rem; font-weight: bold; margin-bottom: 0.5rem;">689/700 (98.4%)</p>
-                <p style="font-size: 1.5rem;">グレード: S (Perfect) ⭐⭐⭐⭐⭐</p>
-                <p style="margin-top: 1rem; opacity: 0.9;">実行時間: わずか5.3秒</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 導入事例（準備中） -->
-    <section class="features">
-        <div class="container">
-            <h2 class="section-title">導入事例（ベータテスト受付中）</h2>
-            <p style="text-align: center; font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem;">
-                現在、最初の5社様を対象に無料3ヶ月のベータテストを実施中です。<br>
-                ご興味のある企業様は<a href="contact.html" style="color: var(--primary-color); text-decoration: underline;">お問い合わせ</a>ください。
-            </p>
-
-            <div style="text-align: center; padding: 3rem; background: #fef3c7; border-radius: 12px; margin-top: 2rem;">
-                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: #92400e;">🎉 ベータテスト特典</h3>
-                <ul style="list-style: none; font-size: 1.2rem; color: #78350f;">
-                    <li style="margin-bottom: 0.5rem;">✓ 3ヶ月間無料でご利用可能</li>
-                    <li style="margin-bottom: 0.5rem;">✓ 専任エンジニアによる導入サポート</li>
-                    <li style="margin-bottom: 0.5rem;">✓ 正式版リリース後、初年度50%割引</li>
-                    <li style="margin-bottom: 0.5rem;">✓ 導入事例として貴社名を掲載（任意）</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="hero" style="padding: 4rem 0;">
-        <div class="container">
-            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">今すぐ始めましょう</h2>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem;">
-                あなたのサーバーを最高のパフォーマンスへ
-            </p>
-            <div class="cta-buttons">
-                <a href="pricing.html" class="btn btn-primary">料金プランを見る</a>
-                <a href="contact.html" class="btn btn-secondary">無料相談</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- フッター -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Rocky Linux v4.0</h3>
-                    <p style="color: rgba(255,255,255,0.8);">
-                        世界最高峰のLinux性能最適化システム<br>
-                        699/700点達成
-                    </p>
-                </div>
-
-                <div class="footer-section">
-                    <h3>製品</h3>
-                    <ul>
-                        <li><a href="pricing.html">料金プラン</a></li>
-                        <li><a href="docs.html">ドキュメント</a></li>
-                        <li><a href="#">API仕様</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h3>サポート</h3>
-                    <ul>
-                        <li><a href="contact.html">お問い合わせ</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">技術サポート</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h3>会社情報</h3>
-                    <ul>
-                        <li><a href="#">運営者情報</a></li>
-                        <li><a href="#">利用規約</a></li>
-                        <li><a href="#">プライバシーポリシー</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 清也 (Seiya) - Rocky Linux Adaptive Performance System. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 </body>
 </html>

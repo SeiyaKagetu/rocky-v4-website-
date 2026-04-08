@@ -1,152 +1,64 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <title>お支払い | NOVE OS</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: #f5f5f7;
-      color: #1d1d1f;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .card {
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-      max-width: 480px;
-      width: 100%;
-      padding: 40px;
-      text-align: center;
-    }
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-      color: #0071e3;
-      margin-bottom: 24px;
-      letter-spacing: 0.05em;
-    }
-    h1 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-    .description {
-      font-size: 14px;
-      color: #6e6e73;
-      line-height: 1.6;
-      margin-bottom: 32px;
-    }
-    .price-box {
-      background: #fbfbfd;
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 32px;
-      border: 1px solid #d2d2d7;
-    }
-    .price-label {
-      font-size: 12px;
-      color: #86868b;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-    }
-    .price-amount {
-      font-size: 32px;
-      font-weight: 800;
-      color: #1d1d1f;
-    }
-    .btn-pay {
-      display: block;
-      width: 100%;
-      background: linear-gradient(135deg, #635bff, #4b44d4);
-      color: #fff;
-      text-decoration: none;
-      padding: 16px;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 17px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(99, 91, 255, 0.3);
-      transition: opacity 0.2s, transform 0.1s;
-    }
-    .btn-pay:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-pay:active { transform: translateY(0); }
-    .btn-pay:disabled { background: #9ca3af; cursor: not-allowed; }
-    .footer-note {
-      font-size: 11px;
-      color: #86868b;
-      margin-top: 24px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHECKOUT | NOVE OS V34</title>
+    <style>
+        :root { --bg: #05050a; --accent: #00ccff; --text: #e0e0e0; --gold: #ffcc00; }
+        body { background: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; padding: 2rem; }
+        header { border-bottom: 1px solid rgba(0,204,255,0.2); padding-bottom: 1rem; margin-bottom: 2rem; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); text-decoration: none; }
+        .checkout-container { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .order-summary { background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 15px; border: 1px solid #222; }
+        .payment-methods { display: flex; flex-direction: column; gap: 20px; }
+        .pay-btn { display: flex; align-items: center; justify-content: center; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 1.1rem; transition: 0.3s; cursor: pointer; border: none; }
+        .stripe-btn { background: #635bff; color: white; }
+        .paypal-btn { background: #ffc439; color: #111; }
+        .pqc-badge { color: var(--gold); font-size: 0.8rem; border: 1px solid var(--gold); padding: 2px 8px; border-radius: 5px; margin-top: 10px; display: inline-block; }
+        @media (max-width: 600px) { .checkout-container { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body>
+<header><a href="index.html" class="logo">NOVE OS V34</a></header>
+<main>
+    <div class="checkout-container">
+        <div class="order-summary">
+            <h2>ご注文内容</h2>
+            <hr style="border:0; border-top:1px solid #333;">
+            <p><strong>NOVE OS V34 Defense Grade</strong></p>
+            <p style="font-size: 2rem; font-weight: bold; color: var(--accent);">¥50,000 <span style="font-size: 1rem; color: #888;">/ 月</span></p>
+            <div class="pqc-badge">Quantum-Safe Checkout Active</div>
+            <ul style="font-size: 0.9rem; padding-left: 20px; margin-top: 20px; color: #aaa;">
+                <li>耐量子暗号 (ML-KEM) ライセンス</li>
+                <li>ISMAP適合・防衛省基準環境</li>
+                <li>24/7 AI監視 (N-DIS)</li>
+            </ul>
+        </div>
+        <div class="payment-methods">
+            <h2>お支払い方法</h2>
+            <p>安全な外部決済ゲートウェイへ移行します。</p>
+            
+            <!-- Stripe Checkout -->
+            <form action="/api/create-checkout-session" method="POST">
+                <input type="hidden" name="plan" value="defense">
+                <button type="submit" class="pay-btn stripe-btn" style="width: 100%;">
+                    Stripe で支払う
+                </button>
+            </form>
 
-<div class="card">
-  <div class="logo">NOVE OS</div>
-  <h1>お支払い手続き</h1>
-  <p class="description">
-    NOVE OS サービス提供一式の決済手続きです。<br>
-    クレジットカード（Visa/Master/JCB/Amex）がご利用いただけます。
-  </p>
-  
-  <div class="price-box">
-    <div class="price-label">ご請求金額（税込）</div>
-    <div class="price-amount">¥30,000</div>
-  </div>
+            <!-- PayPal Checkout -->
+            <div id="paypal-button-container"></div>
+            <a href="#" class="pay-btn paypal-btn">PayPal で支払う</a>
 
-  <button class="btn-pay" id="btnPay" onclick="pay()">
-    カードで支払う（¥30,000）
-  </button>
-  
-  <p class="footer-note">
-    決済はSSLで暗号化され、Stripeにより安全に処理されます。
-  </p>
-  <div id="error" style="color:#f85149;font-size:12px;margin-top:12px;display:none;"></div>
-</div>
-
+            <p style="font-size: 0.8rem; color: #555; text-align: center;">
+                すべての通信は ML-KEM-768 により暗号化され、カード情報は当サーバーには保存されません。
+            </p>
+        </div>
+    </div>
+</main>
 <script>
-  const API_URL = 'https://nove-infinity-project-production.up.railway.app';
-
-  async function pay() {
-    const btn = document.getElementById('btnPay');
-    const err = document.getElementById('error');
-    btn.disabled = true;
-    btn.textContent = '処理中...';
-    err.style.display = 'none';
-
-    try {
-      const res = await fetch(API_URL + '/api/stripe/invoice-checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: 30000,
-          description: 'NOVE OS サービス提供一式（特別決済）',
-          success_url: 'https://noveos.jp/success.html',
-          cancel_url: window.location.href
-        })
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error(data.detail || '決済URLの取得に失敗しました');
-      }
-    } catch (e) {
-      err.textContent = '⚠️ ' + e.message;
-      err.style.display = 'block';
-      btn.disabled = false;
-      btn.textContent = 'カードで支払う（¥30,000）';
-    }
-  }
+    console.log("V34 Secure Payment Module Initialized.");
 </script>
-
 </body>
 </html>

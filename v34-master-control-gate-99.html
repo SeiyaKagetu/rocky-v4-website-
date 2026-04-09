@@ -323,8 +323,21 @@
 
 <aside>
     <div class="logo-container">
-        <div class="logo-text">NOVE OS V34</div>
-        <div style="font-size: 0.6rem; color: var(--text-dim); margin-top: 5px;">MASTER CONTROL PANEL</div>
+        <div class="logo-wrapper" style="gap: 10px;">
+            <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:30px; height:30px;">
+                <path d="M10 30V10L30 30V10" stroke="url(#logo-grad-admin)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <defs>
+                    <linearGradient id="logo-grad-admin" x1="10" y1="10" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#00ccff"/>
+                        <stop offset="1" stop-color="#ff3366"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <div class="logo-text-group">
+                <span class="logo-main" style="font-size: 1.2rem; letter-spacing: 3px;">NOVE<span class="logo-suffix">OS</span></span>
+                <span class="logo-version" style="font-size: 0.5rem; letter-spacing: 2px;">V34 MASTER</span>
+            </div>
+        </div>
     </div>
     <nav>
         <div class="nav-item active" onclick="showPage('dashboard', this)">

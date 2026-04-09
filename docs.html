@@ -6,10 +6,47 @@
     <title>DOCS | NOVE OS V34</title>
     <style>
         :root { --bg: #05050a; --accent: #00ccff; --text: #e0e0e0; }
-        body { background: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; padding: 2rem; display: flex; flex-direction: column; min-height: 100vh; }
-        header { border-bottom: 1px solid rgba(0,204,255,0.2); padding-bottom: 1rem; margin-bottom: 2rem; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); text-decoration: none; }
-        .docs-container { max-width: 900px; margin: 0 auto; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(5, 5, 10, 0.8);
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            filter: drop-shadow(0 0 10px rgba(0, 204, 255, 0.3));
+        }
+
+        .logo-text-group { display: flex; flex-direction: column; line-height: 1; }
+        .logo-main {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            background: linear-gradient(to right, #fff, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo-suffix { font-weight: 300; opacity: 0.7; }
+        .logo-version { font-size: 0.6rem; letter-spacing: 4px; color: #ff3366; font-weight: bold; margin-top: 4px; }
+
+        .docs-container { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
         h1 { color: var(--accent); font-size: 2.5rem; }
         h2 { border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 40px; }
         code { background: #111; padding: 2px 6px; border-radius: 4px; color: #ffcc00; font-family: monospace; }
@@ -17,7 +54,23 @@
     </style>
 </head>
 <body>
-<header><a href="index.html" class="logo">NOVE OS V34</a></header>
+<header>
+    <a href="index.html" class="logo-wrapper">
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 30V10L30 30V10" stroke="url(#logo-grad-docs)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+                <linearGradient id="logo-grad-docs" x1="10" y1="10" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#00ccff"/>
+                    <stop offset="1" stop-color="#ff3366"/>
+                </linearGradient>
+            </defs>
+        </svg>
+        <div class="logo-text-group">
+            <span class="logo-main">NOVE<span class="logo-suffix">OS</span></span>
+            <span class="logo-version">V34 BEYOND</span>
+        </div>
+    </a>
+</header>
 <main class="docs-container">
     <h1>V34 "ULTIMATE BEYOND" 技術仕様</h1>
     <p>物理限界を突破し、絶対的な安全と速度を実現するためのNOVE OSコア技術を解説します。</p>

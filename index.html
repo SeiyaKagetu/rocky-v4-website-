@@ -173,6 +173,7 @@
 
 <main>
     <section class="hero">
+        <div id="v34-graph" style="width: 100%; height: 400px; margin-bottom: 2rem;"></div>
         <h1>究極の要塞、ここに覚醒。</h1>
         <p>0.069μsの極限応答速度。防衛省グレードの耐量子暗号。物理限界を突破した「V34 BEYOND」演算エンジン。</p>
         <div class="btn-group">
@@ -180,6 +181,68 @@
             <a href="docs.html" class="btn" style="background: transparent; border: 1px solid var(--primary-cyan); color: var(--primary-cyan);">詳細仕様</a>
         </div>
     </section>
+
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <script>
+        function initV34Graph() {
+            const size = 50;
+            const x = [], y = [], z = [], colors = [];
+            
+            for (let i = 0; i < size; i++) {
+                const u = (i / size) * 2 * Math.PI;
+                for (let j = 0; j < size; j++) {
+                    const v = (j / size) * 2 * Math.PI;
+                    const r = 2 + Math.cos(u) * Math.sin(v * 2); // V34 Resonance Formula
+                    x.push(r * Math.cos(u));
+                    y.push(r * Math.sin(u));
+                    z.push(Math.sin(u) * Math.cos(v) + Math.cos(u * 1.3));
+                    colors.push(Math.sqrt(u*u + v*v));
+                }
+            }
+
+            const data = [{
+                type: 'scatter3d',
+                mode: 'lines',
+                x: x, y: y, z: z,
+                line: {
+                    width: 4,
+                    color: colors,
+                    colorscale: 'Viridis',
+                    opacity: 0.8
+                }
+            }];
+
+            const layout = {
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                margin: { l: 0, r: 0, b: 0, t: 0 },
+                scene: {
+                    xaxis: { visible: false },
+                    yaxis: { visible: false },
+                    zaxis: { visible: false },
+                    camera: {
+                        eye: { x: 1.5, y: 1.5, z: 1.5 }
+                    }
+                }
+            };
+
+            Plotly.newPlot('v34-graph', data, layout, {displayModeBar: false});
+            
+            // Auto-rotation effect
+            let angle = 0;
+            setInterval(() => {
+                angle += 0.01;
+                Plotly.relayout('v34-graph', {
+                    'scene.camera.eye': {
+                        x: 1.8 * Math.cos(angle),
+                        y: 1.8 * Math.sin(angle),
+                        z: 1.2
+                    }
+                });
+            }, 50);
+        }
+        initV34Graph();
+    </script>
 
     <div class="target-grid" id="spec">
         <div class="card">

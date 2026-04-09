@@ -26,10 +26,10 @@
         <div class="order-summary">
             <h2>ご注文内容</h2>
             <hr style="border:0; border-top:1px solid #333;">
-            <p><strong>NOVE OS V34 Defense Grade</strong></p>
-            <p style="font-size: 2rem; font-weight: bold; color: var(--accent);">¥50,000 <span style="font-size: 1rem; color: #888;">/ 月</span></p>
+            <p><strong id="plan-name-display">NOVE OS V34 Defense Grade</strong></p>
+            <p style="font-size: 2rem; font-weight: bold; color: var(--accent);" id="plan-price-display">¥50,000 <span style="font-size: 1rem; color: #888;">/ 月</span></p>
             <div class="pqc-badge">Quantum-Safe Checkout Active</div>
-            <ul style="font-size: 0.9rem; padding-left: 20px; margin-top: 20px; color: #aaa;">
+            <ul id="plan-features-display" style="font-size: 0.9rem; padding-left: 20px; margin-top: 20px; color: #aaa;">
                 <li>耐量子暗号 (ML-KEM) ライセンス</li>
                 <li>ISMAP適合・防衛省基準環境</li>
                 <li>24/7 AI監視 (N-DIS)</li>
@@ -40,16 +40,14 @@
             <p>安全な外部決済ゲートウェイへ移行します。</p>
             
             <!-- Stripe Checkout -->
-            <form action="/api/create-checkout-session" method="POST">
-                <input type="hidden" name="plan" value="defense">
-                <button type="submit" class="pay-btn stripe-btn" style="width: 100%;">
-                    Stripe で支払う
-                </button>
-            </form>
+            <button id="stripe-btn" class="pay-btn stripe-btn" style="width: 100%;">
+                Stripe で支払う (Credit Card)
+            </button>
 
             <!-- PayPal Checkout -->
-            <div id="paypal-button-container"></div>
-            <a href="#" class="pay-btn paypal-btn">PayPal で支払う</a>
+            <button onclick="alert('PayPal integration is being synchronized... Please use Stripe for now.')" class="pay-btn paypal-btn" style="width: 100%; border: none;">
+                PayPal で支払う
+            </button>
 
             <p style="font-size: 0.8rem; color: #555; text-align: center;">
                 すべての通信は ML-KEM-768 により暗号化され、カード情報は当サーバーには保存されません。
@@ -58,7 +56,74 @@
     </div>
 </main>
 <script>
-    console.log("V34 Secure Payment Module Initialized.");
+    const plans = {
+        'personal': {
+            name: 'Personal Edition',
+            fullName: 'NOVE OS V34 Personal',
+            price: '¥5,000',
+            amount: 5000,
+            features: [
+                '標準高速化 (BBR-V34)',
+                '耐量子暗号ライセンス (1台)',
+                'AIメモリ最適化'
+            ]
+        },
+        'defense': {
+            name: 'Defense Grade',
+            fullName: 'NOVE OS V34 Defense Grade',
+            price: '¥50,000',
+            amount: 50000,
+            features: [
+                'ISMAP / 防衛省基準適合',
+                'AI Threat Hunter (リアルタイム)',
+                'DLP (データ漏洩防止) エンジン'
+            ]
+        }
+    };
+
+    // Get plan from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const planKey = urlParams.get('plan') || 'defense';
+    const currentPlan = plans[planKey] || plans['defense'];
+
+    // Update UI
+    document.getElementById('plan-name-display').innerText = currentPlan.fullName;
+    document.getElementById('plan-price-display').innerHTML = `${currentPlan.price} <span style="font-size: 1rem; color: #888;">/ 月</span>`;
+    
+    const featuresList = document.getElementById('plan-features-display');
+    featuresList.innerHTML = currentPlan.features.map(f => `<li>${f}</li>`).join('');
+
+    document.getElementById('stripe-btn').onclick = async () => {
+        const btn = document.getElementById('stripe-btn');
+        btn.disabled = true;
+        btn.innerText = "セッション作成中...";
+
+        try {
+            const response = await fetch('/api/create-stripe-checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    plan: planKey, 
+                    amount: currentPlan.amount, 
+                    planName: currentPlan.name 
+                })
+            });
+            const data = await response.json();
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                alert('決済システムメンテナンス中: ' + (data.details || data.error));
+                btn.disabled = false;
+                btn.innerText = "Stripe で支払う (Credit Card)";
+            }
+        } catch (e) {
+            alert('通信エラーが発生しました。');
+            btn.disabled = false;
+            btn.innerText = "Stripe で支払う (Credit Card)";
+        }
+    };
+
+    console.log(`V34 Secure Payment Module Initialized for ${currentPlan.name}.`);
 </script>
 </body>
 </html>

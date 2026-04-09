@@ -301,20 +301,6 @@
             transform: translateY(-2px);
         }
 
-        /* フォーム */
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            margin-bottom: 8px;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-        }
-
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
@@ -367,9 +353,9 @@
     <div class="header-top">
         <h1 id="page-title" style="margin: 0; font-size: 1.5rem; letter-spacing: 1px;">SYSTEM OVERVIEW</h1>
         <div class="sys-status">
-            <div class="status-item"><div class="dot"></div> KERNEL: ACTIVE</div>
-            <div class="status-item"><div class="dot"></div> PQC: ENFORCED</div>
-            <div class="status-item"><div class="dot" style="background: var(--success); box-shadow: 0 0 8px var(--success);"></div> DEFENSE: SSS</div>
+            <div class="status-item"><div class="dot"></div> KERNEL: CONNECTED</div>
+            <div class="status-item"><div class="dot"></div> PQC: ACTIVE</div>
+            <div class="status-item"><div class="dot" style="background: var(--success); box-shadow: 0 0 8px var(--success);"></div> MODE: REAL-TIME DATA</div>
         </div>
     </div>
 
@@ -385,19 +371,19 @@
                 <div class="kpi-value" id="count-defense" style="color: var(--pqc-gold);">--</div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-label">Blocked Attacks</div>
-                <div class="kpi-value" style="color: var(--danger);">1,284</div>
+                <div class="kpi-label">Blocked Threats</div>
+                <div class="kpi-value" style="color: var(--danger);" id="count-threats">0</div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-label">Market Traction</div>
-                <div class="kpi-value">99.9%</div>
+                <div class="kpi-label">API Health</div>
+                <div class="kpi-value" id="api-health">100%</div>
             </div>
         </div>
 
         <div class="dashboard-row">
             <div class="panel">
                 <div class="panel-header">
-                    <div class="panel-title">Real-time Performance Metrics</div>
+                    <div class="panel-title">System Performance Metrics</div>
                 </div>
                 <div class="chart-container" style="position: relative; height:300px; width:100%">
                     <canvas id="performanceChart"></canvas>
@@ -466,32 +452,31 @@
             <div class="panel-header">
                 <div class="panel-title">Generate High-Security V34 Key</div>
             </div>
-            <div class="form-group">
-                <label>CUSTOMER NAME / ORGANIZATION</label>
-                <input type="text" id="i-name" placeholder="Entity Name">
+            <div style="margin-bottom: 20px;">
+                <label style="display:block; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px;">CUSTOMER NAME / ORGANIZATION</label>
+                <input type="text" id="i-name" placeholder="Entity Name" style="width:100%">
             </div>
-            <div class="form-group">
-                <label>EMAIL ADDRESS</label>
-                <input type="email" id="i-email" placeholder="admin@example.com">
+            <div style="margin-bottom: 20px;">
+                <label style="display:block; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px;">EMAIL ADDRESS</label>
+                <input type="email" id="i-email" placeholder="admin@example.com" style="width:100%">
             </div>
-            <div class="form-group">
-                <label>V34 DEPLOYMENT PLAN</label>
-                <select id="i-plan">
+            <div style="margin-bottom: 20px;">
+                <label style="display:block; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px;">V34 DEPLOYMENT PLAN</label>
+                <select id="i-plan" style="width:100%">
                     <option value="Personal">Personal Edition (¥5,000)</option>
                     <option value="Defense">Defense Grade (¥50,000)</option>
                     <option value="Ultimate">Ultimate Beyond (Special)</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label>VALIDITY PERIOD (MONTHS)</label>
-                <input type="number" id="i-months" value="12">
+            <div style="margin-bottom: 20px;">
+                <label style="display:block; font-size:0.75rem; color:var(--text-dim); margin-bottom:8px;">VALIDITY PERIOD (MONTHS)</label>
+                <input type="number" id="i-months" value="12" style="width:100%">
             </div>
             <button class="btn-action" style="width: 100%; margin-top: 10px;" onclick="issueKey()">GENERATE PQC-ENCRYPTED KEY</button>
             
             <div id="result-box" style="margin-top: 30px; display: none; padding: 1.5rem; background: rgba(0, 255, 170, 0.05); border: 1px solid var(--success); border-radius: 8px;">
                 <p style="color: var(--success); font-size: 0.8rem; margin-top: 0;">KEY GENERATED SUCCESSFULLY:</p>
                 <textarea id="output-key" readonly style="width: 100%; height: 80px; background: #000; color: var(--success); border: 1px solid #222; padding: 10px; font-family: inherit; font-size: 0.9rem;"></textarea>
-                <p style="font-size: 0.7rem; color: #666; margin-bottom: 0;">This key is now active in the global V34 relay network.</p>
             </div>
         </div>
     </div>
@@ -500,11 +485,10 @@
     <div id="page-threats" class="page">
         <div class="panel">
             <div class="panel-header">
-                <div class="panel-title">AI Threat Hunter | Live Neural Logs</div>
-                <div style="font-size: 0.7rem; color: var(--danger); font-weight: bold;">[ RECORDING ACTIVE ]</div>
+                <div class="panel-title">AI Threat Hunter | Live Sensor Data</div>
             </div>
             <div class="console" id="log-console">
-                <!-- Dynamic Logs -->
+                <div class="console-line"><span class="console-tag">[SYS]</span>Awaiting incoming real-time sensor data...</div>
             </div>
         </div>
     </div>
@@ -514,25 +498,21 @@
     let masterToken = '';
     let performanceChart = null;
 
-    // AUTHENTICATION
     async function verifyAccess() {
         const pass = document.getElementById('admin-pass').value;
         const errorMsg = document.getElementById('error-msg');
         
-        // --- 特別に許可するマスターパスワード ---
         if (pass === "noveos34" || pass === "v34beyond") {
             masterToken = pass;
             document.getElementById('login-gate').style.display = 'none';
             loadData();
             initChart();
-            startLogSimulation();
             return;
         }
 
         errorMsg.innerText = "AUTHENTICATING...";
 
         try {
-            // 本来のAPI認証
             const response = await fetch('/api/licenses', {
                 headers: { 'x-admin-token': pass }
             });
@@ -542,30 +522,23 @@
                 document.getElementById('login-gate').style.display = 'none';
                 loadData();
                 initChart();
-                startLogSimulation();
             } else {
                 errorMsg.innerText = "UNAUTHORIZED ACCESS ATTEMPT LOGGED.";
             }
         } catch (e) {
-            console.error("Auth error", e);
             errorMsg.innerText = "GATEWAY OFFLINE. USE MASTER CODE.";
         }
     }
 
-    // NAVIGATION
     function showPage(id, btn) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-        
         document.getElementById('page-' + id).classList.add('active');
         btn.classList.add('active');
-        
         document.getElementById('page-title').innerText = id.toUpperCase().replace('-', ' ');
-        
         if (id === 'licenses') loadLicenses();
     }
 
-    // API DATA LOADING
     async function loadData() {
         try {
             const response = await fetch('/api/licenses', {
@@ -578,10 +551,9 @@
             
             document.getElementById('count-active').innerText = activeCount;
             document.getElementById('count-defense').innerText = defenseCount;
-            
             renderLicenseTable(licenses);
         } catch (e) {
-            console.error("Dashboard data load failure", e);
+            document.getElementById('api-health').innerText = "OFFLINE";
         }
     }
 
@@ -593,7 +565,7 @@
             const licenses = await response.json();
             renderLicenseTable(licenses);
         } catch (e) {
-            console.error("License list load failure", e);
+            console.error(e);
         }
     }
 
@@ -622,39 +594,23 @@
         const plan = document.getElementById('i-plan').value;
         const months = document.getElementById('i-months').value;
         
-        if (!name || !email) {
-            alert("Mandatory fields missing.");
-            return;
-        }
+        if (!name || !email) { alert("Mandatory fields missing."); return; }
 
         try {
             const response = await fetch('/api/license/generate', {
                 method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'x-admin-token': masterToken 
-                },
-                body: JSON.stringify({
-                    plan: plan.toLowerCase(),
-                    customer_name: name,
-                    customer_email: email,
-                    months: parseInt(months)
-                })
+                headers: { 'Content-Type': 'application/json', 'x-admin-token': masterToken },
+                body: JSON.stringify({ plan: plan.toLowerCase(), customer_name: name, customer_email: email, months: parseInt(months) })
             });
             const data = await response.json();
             if (response.ok) {
                 document.getElementById('result-box').style.display = 'block';
                 document.getElementById('output-key').value = data.license_key;
                 loadData();
-            } else {
-                alert("Generation Failed: " + data.detail);
-            }
-        } catch (e) {
-            alert("Sync Error.");
-        }
+            } else { alert("Failed: " + data.detail); }
+        } catch (e) { alert("Sync Error."); }
     }
 
-    // VISUALS
     function initChart() {
         const ctx = document.getElementById('performanceChart').getContext('2d');
         const gradient = ctx.createLinearGradient(0, 0, 0, 300);
@@ -667,7 +623,7 @@
                 labels: Array.from({length: 40}, (_, i) => ''),
                 datasets: [{
                     label: 'Sync Latency (ns)',
-                    data: Array.from({length: 40}, () => Math.random() * 5 + 3),
+                    data: Array.from({length: 40}, () => 0),
                     borderColor: '#00ccff',
                     borderWidth: 2,
                     pointRadius: 0,
@@ -679,56 +635,13 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                animation: {
-                    duration: 1000,
-                    easing: 'linear'
-                },
                 plugins: { legend: { display: false } },
                 scales: {
                     x: { display: false },
-                    y: { 
-                        min: 0,
-                        max: 15,
-                        grid: { color: 'rgba(255,255,255,0.05)' },
-                        ticks: { color: '#444', font: { size: 10 } }
-                    }
+                    y: { min: 0, max: 15, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#444', font: { size: 10 } } }
                 }
             }
         });
-
-        // Live update simulation (Smoother)
-        setInterval(() => {
-            if (performanceChart) {
-                performanceChart.data.datasets[0].data.shift();
-                performanceChart.data.datasets[0].data.push(Math.random() * 6 + 2);
-                performanceChart.update('none'); // Update without full animation for smoothness
-            }
-        }, 800);
-    }
-
-    function startLogSimulation() {
-        const console = document.getElementById('log-console');
-        const logs = [
-            "[NEURAL] Scanning incoming traffic on Port 443...",
-            "[PQC] Handshake verified with ML-KEM-768.",
-            "[HUNTER] Suspicious pattern detected from 185.x.x.x - Dropped.",
-            "[SYSTEM] Beyond Core Scheduler optimized 1,244 tasks.",
-            "[DATABASE] License DB synchronization complete.",
-            "[SYSCALL] Memory singularity reached: 312% efficiency.",
-            "[DEFENSE] All perimeters secure. Harmony Index: 124.46"
-        ];
-        
-        let i = 0;
-        setInterval(() => {
-            const time = new Date().toLocaleTimeString();
-            const log = logs[Math.floor(Math.random() * logs.length)];
-            const div = document.createElement('div');
-            div.className = 'console-line';
-            div.innerHTML = `<span class="console-time">${time}</span><span class="console-tag">[SYS]</span>${log}`;
-            console.appendChild(div);
-            console.scrollTop = console.scrollHeight;
-            if (console.children.length > 50) console.removeChild(console.firstChild);
-        }, 3000);
     }
 
     function filterLicenses() {
@@ -739,7 +652,6 @@
         });
     }
 
-    // Login on Enter
     document.getElementById('admin-pass').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') verifyAccess();
     });

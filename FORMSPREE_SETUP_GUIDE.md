@@ -272,7 +272,7 @@ Formspree無料プランの制限：
 Formspree連携完了後：
 
 1. ✅ お問い合わせフォーム動作確認
-2. ⏳ メールアドレス変更（seiya@example.com → myseiyakagetu@proton.me）
+2. ⏳ メールアドレス変更（myseiyakagetu@proton.me → myseiyakagetu@proton.me）
 3. ⏳ サイト名変更（rocky-linux-v4.netlify.app）
 4. ⏳ マーケティング開始（SNS投稿・Qiita記事）
 

@@ -40,7 +40,7 @@ bash setup-git.sh
 
 **スクリプトが尋ねること**:
 1. お名前（例: Seiya Kawaguchi）
-2. メールアドレス（例: seiya@example.com）
+2. メールアドレス（例: myseiyakagetu@proton.me）
 3. GitHubリポジトリURL（後で設定も可）
 
 ---
@@ -195,11 +195,11 @@ cd /home/seiya/Projects/nove-infinity-project/website
 
 # contact.html 編集（109行目）
 nano contact.html
-# seiya@example.com → あなたのメール
+# myseiyakagetu@proton.me → あなたのメール
 
 # docs.html 編集（288行目、313行目）
 nano docs.html
-# seiya@example.com → あなたのメール
+# myseiyakagetu@proton.me → あなたのメール
 
 # GitHubへプッシュ
 git add contact.html docs.html

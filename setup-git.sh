@@ -43,7 +43,7 @@ if [ -z "$GIT_NAME" ] || [ -z "$GIT_EMAIL" ]; then
     echo "⚠️  Git設定が不足しています"
     echo ""
     read -p "お名前を入力してください（例: Seiya Kawaguchi）: " INPUT_NAME
-    read -p "メールアドレスを入力してください（例: seiya@example.com）: " INPUT_EMAIL
+    read -p "メールアドレスを入力してください（例: myseiyakagetu@proton.me）: " INPUT_EMAIL
 
     git config --global user.name "$INPUT_NAME"
     git config --global user.email "$INPUT_EMAIL"

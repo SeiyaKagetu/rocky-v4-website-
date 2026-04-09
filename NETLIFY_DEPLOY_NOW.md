@@ -181,11 +181,11 @@ cd /home/seiya/Projects/nove-infinity-project/website
 
 # contact.html 編集（109行目）
 nano contact.html
-# seiya@example.com → あなたのメール
+# myseiyakagetu@proton.me → あなたのメール
 
 # docs.html 編集（288行目、313行目）
 nano docs.html
-# seiya@example.com → あなたのメール
+# myseiyakagetu@proton.me → あなたのメール
 
 # GitHubへプッシュ
 git add contact.html docs.html

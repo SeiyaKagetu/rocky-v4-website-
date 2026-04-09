@@ -169,7 +169,7 @@ git push -u origin main
    変更箇所（109行目）:
    ```html
    <!-- 変更前 -->
-   <a href="mailto:seiya@example.com">seiya@example.com</a>
+   <a href="mailto:myseiyakagetu@proton.me">myseiyakagetu@proton.me</a>
 
    <!-- 変更後 -->
    <a href="mailto:あなたのメール@example.com">あなたのメール@example.com</a>
@@ -178,7 +178,7 @@ git push -u origin main
 2. **docs.html 編集** (288行目):
    ```html
    <!-- 変更前 -->
-   # Email: seiya@example.com
+   # Email: myseiyakagetu@proton.me
 
    <!-- 変更後 -->
    # Email: あなたのメール@example.com

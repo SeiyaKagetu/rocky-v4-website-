@@ -210,7 +210,7 @@ git push
 nano contact.html  # 109行目
 nano docs.html     # 288行目、313行目
 
-# seiya@example.com → あなたのメール
+# myseiyakagetu@proton.me → あなたのメール
 
 # GitHubへプッシュ
 git add contact.html docs.html

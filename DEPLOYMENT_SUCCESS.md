@@ -116,18 +116,18 @@
 
 ### ステップ3: メールアドレス変更（5分）
 
-`seiya@example.com` → 実際のメールアドレスに変更：
+`myseiyakagetu@proton.me` → 実際のメールアドレスに変更：
 
 ```bash
 cd /home/seiya/Projects/nove-infinity-project/website
 
 # contact.html 編集（109行目）
 nano contact.html
-# seiya@example.com → myseiyakagetu@proton.me
+# myseiyakagetu@proton.me → myseiyakagetu@proton.me
 
 # docs.html 編集（288行目、313行目）
 nano docs.html
-# seiya@example.com → myseiyakagetu@proton.me
+# myseiyakagetu@proton.me → myseiyakagetu@proton.me
 
 # GitHubへプッシュ
 git add contact.html docs.html

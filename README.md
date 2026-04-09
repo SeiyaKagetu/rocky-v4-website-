@@ -95,7 +95,7 @@ git push -u origin main
 
 ```html
 <!-- 変更前 -->
-<a href="mailto:seiya@example.com">seiya@example.com</a>
+<a href="mailto:myseiyakagetu@proton.me">myseiyakagetu@proton.me</a>
 
 <!-- 変更後 -->
 <a href="mailto:あなたのメールアドレス">あなたのメールアドレス</a>
@@ -238,7 +238,7 @@ https://あなたのドメイン.com
 質問・問題がある場合:
 
 1. **ドキュメント確認**: docs.html
-2. **メール連絡**: seiya@example.com
+2. **メール連絡**: myseiyakagetu@proton.me
 3. **GitHub Issue**: プロジェクトリポジトリ
 
 ---

@@ -399,7 +399,9 @@
                 <div class="panel-header">
                     <div class="panel-title">Real-time Performance Metrics</div>
                 </div>
-                <canvas id="performanceChart" style="width: 100%; height: 300px;"></canvas>
+                <div class="chart-container" style="position: relative; height:300px; width:100%">
+                    <canvas id="performanceChart"></canvas>
+                </div>
             </div>
             <div class="panel">
                 <div class="panel-header">
@@ -655,27 +657,38 @@
     // VISUALS
     function initChart() {
         const ctx = document.getElementById('performanceChart').getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, 'rgba(0, 204, 255, 0.4)');
+        gradient.addColorStop(1, 'rgba(0, 204, 255, 0)');
+
         performanceChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: Array.from({length: 20}, (_, i) => i),
+                labels: Array.from({length: 40}, (_, i) => ''),
                 datasets: [{
                     label: 'Sync Latency (ns)',
-                    data: Array.from({length: 20}, () => Math.random() * 10 + 5),
+                    data: Array.from({length: 40}, () => Math.random() * 5 + 3),
                     borderColor: '#00ccff',
                     borderWidth: 2,
+                    pointRadius: 0,
                     tension: 0.4,
                     fill: true,
-                    backgroundColor: 'rgba(0, 204, 255, 0.05)'
+                    backgroundColor: gradient
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: {
+                    duration: 1000,
+                    easing: 'linear'
+                },
                 plugins: { legend: { display: false } },
                 scales: {
                     x: { display: false },
                     y: { 
+                        min: 0,
+                        max: 15,
                         grid: { color: 'rgba(255,255,255,0.05)' },
                         ticks: { color: '#444', font: { size: 10 } }
                     }
@@ -683,12 +696,14 @@
             }
         });
 
-        // Live update simulation
+        // Live update simulation (Smoother)
         setInterval(() => {
-            performanceChart.data.datasets[0].data.shift();
-            performanceChart.data.datasets[0].data.push(Math.random() * 8 + 4);
-            performanceChart.update('none');
-        }, 1000);
+            if (performanceChart) {
+                performanceChart.data.datasets[0].data.shift();
+                performanceChart.data.datasets[0].data.push(Math.random() * 6 + 2);
+                performanceChart.update('none'); // Update without full animation for smoothness
+            }
+        }, 800);
     }
 
     function startLogSimulation() {

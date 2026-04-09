@@ -39,41 +39,49 @@ exports.handler = async (event, context) => {
     // リクエストボディから料金プラン情報を取得
     const { plan, amount, planName } = JSON.parse(event.body);
 
-    // 料金プラン情報の検証
-    if (!plan || !amount || !planName) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({
-          error: 'Missing required parameters: plan, amount, planName'
-        }),
-      };
+    // 価格IDの取得 (環境変数から)
+    let priceId = "";
+    if (plan.toLowerCase() === 'personal') {
+      priceId = process.env.STRIPE_PERSONAL_PRICE_ID;
+    } else if (plan.toLowerCase() === 'defense') {
+      priceId = process.env.STRIPE_DEFENSE_PRICE_ID;
     }
 
-    // Stripe Checkout Session作成
-    const session = await stripe.checkout.sessions.create({
+    // Stripe Checkout Sessionの構成
+    const sessionConfig = {
       payment_method_types: ['card'],
-      line_items: [
+      success_url: `${process.env.URL || 'https://noveos.jp'}/success.html?plan=${plan}&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.URL || 'https://noveos.jp'}/pricing.html?canceled=true`,
+      metadata: {
+        plan: plan,
+        planName: planName,
+      },
+    };
+
+    if (priceId) {
+      // 登録済みの定期支払いプラン（サブスクリプション）を使用
+      sessionConfig.line_items = [{ price: priceId, quantity: 1 }];
+      sessionConfig.mode = 'subscription';
+    } else {
+      // フォールバック: 単発決済として作成
+      sessionConfig.line_items = [
         {
           price_data: {
             currency: 'jpy',
             product_data: {
-              name: `Rocky Linux v4.0 - ${planName}`,
+              name: `NOVE OS V34 - ${planName}`,
               description: `月額プラン - ${planName}`,
             },
             unit_amount: parseInt(amount),
           },
           quantity: 1,
         },
-      ],
-      mode: 'payment',
-      success_url: `${process.env.URL}/pricing.html?success=true&plan=${plan}&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.URL}/pricing.html?canceled=true`,
-      metadata: {
-        plan: plan,
-        planName: planName,
-      },
-    });
+      ];
+      sessionConfig.mode = 'payment';
+    }
+
+    // Stripe Checkout Session作成
+    const session = await stripe.checkout.sessions.create(sessionConfig);
 
     // 成功レスポンス
     return {

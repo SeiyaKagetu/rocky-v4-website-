@@ -515,10 +515,26 @@
     // AUTHENTICATION
     async function verifyAccess() {
         const pass = document.getElementById('admin-pass').value;
+        const errorMsg = document.getElementById('error-msg');
+        
+        // --- 特別に許可するマスターパスワード ---
+        if (pass === "noveos34" || pass === "v34beyond") {
+            masterToken = pass;
+            document.getElementById('login-gate').style.display = 'none';
+            loadData();
+            initChart();
+            startLogSimulation();
+            return;
+        }
+
+        errorMsg.innerText = "AUTHENTICATING...";
+
         try {
-            const response = await fetch('/api/mail/status', {
+            // 本来のAPI認証
+            const response = await fetch('/api/licenses', {
                 headers: { 'x-admin-token': pass }
             });
+            
             if (response.ok) {
                 masterToken = pass;
                 document.getElementById('login-gate').style.display = 'none';
@@ -526,19 +542,11 @@
                 initChart();
                 startLogSimulation();
             } else {
-                document.getElementById('error-msg').innerText = "UNAUTHORIZED ACCESS ATTEMPT LOGGED.";
+                errorMsg.innerText = "UNAUTHORIZED ACCESS ATTEMPT LOGGED.";
             }
         } catch (e) {
-            // Fallback for demo/offline
-            if (pass === "v34beyond") {
-                masterToken = pass;
-                document.getElementById('login-gate').style.display = 'none';
-                loadData();
-                initChart();
-                startLogSimulation();
-            } else {
-                document.getElementById('error-msg').innerText = "CONNECTION FAILURE.";
-            }
+            console.error("Auth error", e);
+            errorMsg.innerText = "GATEWAY OFFLINE. USE MASTER CODE.";
         }
     }
 

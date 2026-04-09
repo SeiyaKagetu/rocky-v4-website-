@@ -149,9 +149,35 @@
         </table>
     </section>
 
-    <section>
-        <h2>4. 13次元共鳴同期</h2>
-        <p>数学的モデルに基づき、複数ノード間（サーバー間）の時刻および意識（ステート）を完全に同期。13次元ベクトル空間上でのデータ整合性を保証することで、分散システムの限界を突破します。</p>
+    <section id="os-support">
+        <h2>5. 対応OS・プラットフォーム</h2>
+        <p>NOVE OS V34は、現在以下の環境を正式にサポートしています。既存の環境を維持したまま、カーネル層から「V34 要塞化」を実行可能です。</p>
+        <table>
+            <tr><th>OSタイプ</th><th>ディストリビューション / 環境</th><th>ステータス</th></tr>
+            <tr><td>推奨</td><td><strong>Rocky Linux 8.x / 9.x</strong></td><td>Full Support</td></tr>
+            <tr><td>推奨</td><td><strong>AlmaLinux 8.x / 9.x</strong></td><td>Full Support</td></tr>
+            <tr><td>標準</td><td><strong>Ubuntu 22.04 / 24.04 LTS</strong></td><td>Optimized</td></tr>
+            <tr><td>企業</td><td><strong>RHEL 8 / 9</strong></td><td>Certified</td></tr>
+            <tr><td>クラウド</td><td>AWS, GCP, Azure, Oracle Cloud</td><td>Ready</td></tr>
+        </table>
+    </section>
+
+    <section id="roadmap">
+        <h2>6. 今後の対応予定（Roadmap 2026-2027）</h2>
+        <ul>
+            <li><strong>2026 Q3:</strong> ARM64 (AWS Graviton / Apple Silicon) への完全ネイティブ対応。</li>
+            <li><strong>2026 Q4:</strong> <strong>Windows / macOS 用 V34 Security Layer</strong> のリリース。</li>
+            <li><strong>2027 Q1:</strong> 組み込み・エッジデバイス（NVIDIA Jetson等）への超軽量モデル提供。</li>
+        </ul>
+    </section>
+
+    <section id="install">
+        <h2>7. 導入方法 (Quick Start)</h2>
+        <p>NOVE OS V34の導入は非常にシンプルです。ライセンス発行後、対象のサーバーで以下のコマンドを1行実行するだけで、システムの要塞化と高速化が完了します。</p>
+        <div class="spec-box" style="background: #000; border-color: var(--accent);">
+            <code>curl -sSL https://get.noveos.jp/v34-install.sh | sudo bash -s -- --key YOUR_LICENSE_KEY</code>
+        </div>
+        <p style="font-size: 0.8rem; color: #666;">※導入前にバックアップを推奨します。インストールは通常、ダウンタイムなしで完了します。</p>
     </section>
 </main>
 

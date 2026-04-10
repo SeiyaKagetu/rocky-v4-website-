@@ -11,7 +11,7 @@
 
 # リダイレクト設定
 [[redirects]]
-  from = "/api/contact"
+  from = "https://formspree.io/f/mbdpvwey"
   to = "https://formspree.io/f/mbdpvwey"
   status = 200
   force = true

@@ -196,7 +196,7 @@
         btn.innerText = "セッション作成中...";
 
         try {
-            const response = await fetch('/api/create-stripe-checkout', {
+            const response = await fetch('https://nove-infinity-project-production.up.railway.app/api/create-stripe-checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 

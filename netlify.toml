@@ -4,22 +4,23 @@
   functions = "netlify/functions"
 
 [[redirects]]
+  from = "/api/v2-contact"
+  to = "/.netlify/functions/v2-contact"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/v2"
+  to = "/contact-v2.html"
+  status = 200
+
+[[redirects]]
   from = "/api/contact"
-  to = "/.netlify/functions/contact"
+  to = "https://formspree.io/f/mbdpvwey"
   status = 200
   force = true
 
 [[redirects]]
   from = "/contact"
   to = "/contact.html"
-  status = 200
-
-[[redirects]]
-  from = "/pricing"
-  to = "/pricing.html"
-  status = 200
-
-[[redirects]]
-  from = "/docs"
-  to = "/docs.html"
   status = 200

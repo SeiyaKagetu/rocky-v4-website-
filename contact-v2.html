@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEW CONTACT | NOVE OS V34</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://formspree.io;">
+    <style>
+        :root { --bg: #020205; --accent: #00f2ff; --text: #ffffff; }
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; padding: 0; 
+            background-image: radial-gradient(circle at 50% 50%, #0a0a20 0%, #020205 100%);
+            min-height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .v2-form-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+            padding: 40px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 450px;
+            backdrop-filter: blur(15px);
+        }
+        h1 { 
+            text-transform: uppercase; 
+            letter-spacing: 5px; 
+            color: var(--accent); 
+            text-align: center;
+            text-shadow: 0 0 10px var(--accent);
+        }
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-size: 0.8rem; color: var(--accent); margin-bottom: 5px; }
+        input, textarea, select {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            color: #fff;
+            padding: 12px;
+            border-radius: 5px;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent); }
+        .cyber-button {
+            width: 100%;
+            background: var(--accent);
+            color: #000;
+            font-weight: 900;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .cyber-button:hover {
+            background: #fff;
+            box-shadow: 0 0 40px var(--accent);
+            transform: scale(1.02);
+        }
+        #feedback { margin-top: 20px; text-align: center; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+    <div class="v2-form-card">
+        <h1>V2 Contact</h1>
+        <p style="text-align: center; color: #888; font-size: 0.8rem;">NEW ENDPOINT SYSTEM ACTIVE</p>
+        <div id="feedback"></div>
+        <form id="v2Form">
+            <div class="input-group">
+                <label>NAME</label>
+                <input type="text" name="name" required placeholder="User System ID">
+            </div>
+            <div class="input-group">
+                <label>EMAIL</label>
+                <input type="email" name="email" required placeholder="secure@link.pqc">
+            </div>
+            <div class="input-group">
+                <label>MESSAGE</label>
+                <textarea name="message" rows="4" required placeholder="System request log..."></textarea>
+            </div>
+            <button type="submit" class="cyber-button" id="submitBtn">EXECUTE TRANSMISSION</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('v2Form').onsubmit = function(e) {
+            e.preventDefault();
+            var btn = document.getElementById('submitBtn');
+            var fb = document.getElementById('feedback');
+            btn.disabled = true;
+            btn.innerText = "TRANSMITTING...";
+
+            // 新しいエンドポイント /api/v2-contact への送信
+            fetch('/api/v2-contact', {
+                method: 'POST',
+                body: JSON.stringify(Object.fromEntries(new FormData(this))),
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
+            }).then(res => {
+                if (res.ok) {
+                    fb.innerText = "✅ TRANSMISSION SUCCESSFUL";
+                    fb.style.color = "#00ffaa";
+                    fb.style.display = "block";
+                    this.reset();
+                } else {
+                    throw new Error();
+                }
+            }).catch(err => {
+                fb.innerText = "❌ TRANSMISSION FAILED - REDIRECTING TO BACKUP";
+                fb.style.color = "#ff3366";
+                fb.style.display = "block";
+                // バックアップとしてFormspreeへ直接
+                setTimeout(() => {
+                    window.location.href = "https://formspree.io/f/mbdpvwey";
+                }, 2000);
+            }).finally(() => {
+                btn.disabled = false;
+                btn.innerText = "EXECUTE TRANSMISSION";
+            });
+        };
+    </script>
+</body>
+</html>

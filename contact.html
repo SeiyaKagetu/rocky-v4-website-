@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CONTACT | NOVE OS V34</title>
+    <!-- Favicon (SVG data URI - NOVE logo) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23667eea' width='100' height='100' rx='20'/><text x='50' y='70' text-anchor='middle' font-size='60' font-weight='bold' fill='white' font-family='Arial'>N</text></svg>">
     <style>
         :root { --bg: #05050a; --accent: #00ccff; --text: #e0e0e0; }
         body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
@@ -115,7 +117,7 @@
         <h1>お問い合わせ</h1>
         <p>導入のご相談、技術的な質問、または極秘案件に関するお問い合わせを承ります。</p>
         <div id="form-feedback" style="display: none; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; text-align: center; font-weight: bold;"></div>
-        <form id="contactForm">
+        <form id="contactForm" action="https://formspree.io/f/mbdpvwey" method="POST">
             <label>区分 *</label>
             <div style="display: flex; gap: 15px; margin: 10px 0;">
                 <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
@@ -130,19 +132,19 @@
             </div>
 
             <label>氏名 *</label>
-            <input type="text" id="form-name" required placeholder="清也">
+            <input type="text" id="form-name" name="name" required placeholder="清也">
             <label>メールアドレス *</label>
-            <input type="email" id="form-email" required placeholder="myseiyakagetu@proton.me">
+            <input type="email" id="form-email" name="email" required placeholder="myseiyakagetu@proton.me">
             <label>所属・組織</label>
-            <input type="text" id="form-company" placeholder="NOVE INFINITY PROJECT">
+            <input type="text" id="form-company" name="company" placeholder="NOVE INFINITY PROJECT">
             <label>お問い合わせ内容 *</label>
-            <select id="form-plan">
+            <select id="form-plan" name="plan">
                 <option value="Personal">Personal Plan について</option>
                 <option value="Defense">Defense Grade について</option>
                 <option value="Ultimate">Ultimate Beyond (極秘案件) について</option>
                 <option value="Other">その他</option>
             </select>
-            <textarea id="form-message" rows="5" required placeholder="メッセージをご入力ください。"></textarea>
+            <textarea id="form-message" name="message" rows="5" required placeholder="メッセージをご入力ください。"></textarea>
             <button type="submit" class="btn-submit" id="submitBtn">送信する (V34 Secure)</button>
         </form>
     </div>
@@ -168,9 +170,10 @@ document.getElementById('contactForm').addEventListener('submit', async function
     };
 
     try {
-        const response = await fetch('/api/contact', {
+        // Formspree API Endpoint (mbdpvwey)
+        const response = await fetch('https://formspree.io/f/mbdpvwey', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify(data)
         });
 

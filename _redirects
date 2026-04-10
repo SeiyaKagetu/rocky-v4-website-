@@ -1,1 +1,4 @@
-/api/*  https://nove-infinity-project-production.up.railway.app/api/:splat  200!
+/*  /index.html  200
+/contact  /contact.html  200
+/pricing  /pricing.html  200
+/docs  /docs.html  200

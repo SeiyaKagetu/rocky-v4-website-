@@ -9,10 +9,6 @@
   # Functions ディレクトリ
   functions = "netlify/functions"
 
-# 環境変数（Netlify Dashboard で設定）
-# PAYPAL_CLIENT_ID = "AfhiZfLQ_sGwPqWukUF"
-# PAYPAL_CLIENT_SECRET = "AfhiZfLQ_sGwPqWukUFySk6n95qB6Ynvee-KAnk6doSR--2xJin97tMqjDzVJDPVH7q7Iypg599dnoXP"
-
 # リダイレクト設定
 [[redirects]]
   from = "/admin"
@@ -24,11 +20,4 @@
   from = "/admin.html"
   to = "/"
   status = 301
-  force = true
-
-# APIリダイレクト
-[[redirects]]
-  from = "/api/*"
-  to = "https://nove-infinity-project-production.up.railway.app/api/:splat"
-  status = 200
   force = true

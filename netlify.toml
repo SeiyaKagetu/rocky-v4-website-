@@ -29,5 +29,6 @@
 # APIリダイレクト
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  to = "https://nove-infinity-project-production.up.railway.app/api/:splat"
   status = 200
+  force = true

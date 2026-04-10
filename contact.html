@@ -114,25 +114,90 @@
     <div class="form-container">
         <h1>お問い合わせ</h1>
         <p>導入のご相談、技術的な質問、または極秘案件に関するお問い合わせを承ります。</p>
-        <form action="/api/contact" method="POST">
-            <label>氏名</label>
-            <input type="text" name="name" required placeholder="清也">
-            <label>メールアドレス</label>
-            <input type="email" name="email" required placeholder="myseiyakagetu@proton.me">
+        <div id="form-feedback" style="display: none; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; text-align: center; font-weight: bold;"></div>
+        <form id="contactForm">
+            <label>区分 *</label>
+            <div style="display: flex; gap: 15px; margin: 10px 0;">
+                <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                    <input type="radio" name="user_type" value="法人" required checked style="width: auto;"> 法人
+                </label>
+                <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                    <input type="radio" name="user_type" value="個人事業主" style="width: auto;"> 個人事業主
+                </label>
+                <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                    <input type="radio" name="user_type" value="個人" style="width: auto;"> 個人
+                </label>
+            </div>
+
+            <label>氏名 *</label>
+            <input type="text" id="form-name" required placeholder="清也">
+            <label>メールアドレス *</label>
+            <input type="email" id="form-email" required placeholder="myseiyakagetu@proton.me">
             <label>所属・組織</label>
-            <input type="text" name="company" placeholder="NOVE INFINITY PROJECT">
-            <label>お問い合わせ内容</label>
-            <select name="plan">
+            <input type="text" id="form-company" placeholder="NOVE INFINITY PROJECT">
+            <label>お問い合わせ内容 *</label>
+            <select id="form-plan">
                 <option value="Personal">Personal Plan について</option>
                 <option value="Defense">Defense Grade について</option>
                 <option value="Ultimate">Ultimate Beyond (極秘案件) について</option>
                 <option value="Other">その他</option>
             </select>
-            <textarea name="message" rows="5" required placeholder="メッセージをご入力ください。"></textarea>
-            <button type="submit" class="btn-submit">送信する (V34 Secure)</button>
+            <textarea id="form-message" rows="5" required placeholder="メッセージをご入力ください。"></textarea>
+            <button type="submit" class="btn-submit" id="submitBtn">送信する (V34 Secure)</button>
         </form>
     </div>
 </main>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const feedback = document.getElementById('form-feedback');
+    
+    btn.disabled = true;
+    btn.textContent = '送信中...';
+    feedback.style.display = 'none';
+
+    const data = {
+        user_type: document.querySelector('input[name="user_type"]:checked').value,
+        name: document.getElementById('form-name').value,
+        email: document.getElementById('form-email').value,
+        company: document.getElementById('form-company').value,
+        plan: document.getElementById('form-plan').value,
+        message: document.getElementById('form-message').value
+    };
+
+    try {
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            feedback.style.display = 'block';
+            feedback.style.background = 'rgba(0, 255, 170, 0.1)';
+            feedback.style.color = '#00ffaa';
+            feedback.style.border = '1px solid #00ffaa';
+            feedback.textContent = '✅ お問い合わせを受け付けました。ありがとうございます。';
+            this.reset();
+        } else {
+            throw new Error(result.detail ? JSON.stringify(result.detail) : 'エラーが発生しました');
+        }
+    } catch (error) {
+        feedback.style.display = 'block';
+        feedback.style.background = 'rgba(255, 51, 102, 0.1)';
+        feedback.style.color = '#ff3366';
+        feedback.style.border = '1px solid #ff3366';
+        feedback.textContent = '❌ 送信エラー: ' + error.message;
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '送信する (V34 Secure)';
+    }
+});
+</script>
 
     <footer class="main-footer">
         <div class="footer-grid">

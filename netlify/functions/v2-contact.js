@@ -1,30 +1,44 @@
-const fetch = require('node-fetch');
+const https = require('https');
 
 exports.handler = async (event, context) => {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
 
-  try {
-    const response = await fetch('https://formspree.io/f/mbdpvwey', {
+  return new Promise((resolve, reject) => {
+    const options = {
+      hostname: 'formspree.io',
+      path: '/f/mbdpvwey',
       method: 'POST',
-      body: event.body,
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json' 
+        'Accept': 'application/json'
       }
+    };
+
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk) => data += chunk);
+      res.on('end', () => {
+        resolve({
+          statusCode: res.statusCode,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          },
+          body: data
+        });
+      });
     });
 
-    const data = await response.json();
-    return {
-      statusCode: 200,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
-      },
-      body: JSON.stringify({ success: true, original: data })
-    };
-  } catch (error) {
-    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
-  }
+    req.on('error', (e) => {
+      resolve({
+        statusCode: 500,
+        body: JSON.stringify({ error: e.message })
+      });
+    });
+
+    req.write(event.body);
+    req.end();
+  });
 };

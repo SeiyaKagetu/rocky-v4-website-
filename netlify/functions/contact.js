@@ -1,31 +1,44 @@
-const fetch = require('node-fetch');
+const https = require('https');
 
 exports.handler = async (event, context) => {
-  // 404を回避するため、どんなリクエストも受け付ける
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
 
-  try {
-    const response = await fetch('https://formspree.io/f/mbdpvwey', {
+  return new Promise((resolve, reject) => {
+    const options = {
+      hostname: 'formspree.io',
+      path: '/f/mbdpvwey',
       method: 'POST',
-      body: event.body,
-      headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json' 
-      }
-    });
-
-    const data = await response.json();
-    return {
-      statusCode: response.ok ? 200 : 400,
-      body: JSON.stringify(data),
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       }
     };
-  } catch (error) {
-    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
-  }
+
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk) => data += chunk);
+      res.on('end', () => {
+        resolve({
+          statusCode: res.statusCode,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+          },
+          body: data
+        });
+      });
+    });
+
+    req.on('error', (e) => {
+      resolve({
+        statusCode: 500,
+        body: JSON.stringify({ error: e.message })
+      });
+    });
+
+    req.write(event.body);
+    req.end();
+  });
 };

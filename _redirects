@@ -1,5 +1,6 @@
+/admin  /admin.html  200
+/admin.html  /admin.html  200
+/api/v2-contact  /.netlify/functions/v2-contact  200
+/v2  /contact-v2.html  200
+/api/contact  https://formspree.io/f/mbdpvwey  200
 /contact  /contact.html  200
-/pricing  /pricing.html  200
-/docs  /docs.html  200
-/favicon.ico  /favicon.ico  200
-https://formspree.io/f/mbdpvwey  https://formspree.io/f/mbdpvwey  200

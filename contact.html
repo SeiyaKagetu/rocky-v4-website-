@@ -3,65 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CONTACT | NOVE OS V34</title>
-    <!-- Favicon (SVG data URI) -->
+    <title>CONTACT | NOVE OS V34 ULTIMATE</title>
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://formspree.io;">
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23667eea' width='100' height='100' rx='20'/><text x='50' y='70' text-anchor='middle' font-size='60' font-weight='bold' fill='white' font-family='Arial'>N</text></svg>">
     <style>
-        :root { --bg: #05050a; --accent: #00ccff; --text: #e0e0e0; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
-        header { padding: 2rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .form-container { max-width: 500px; margin: 3rem auto; background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 20px; border: 1px solid #222; flex-grow: 1; }
-        h1 { color: var(--accent); text-align: center; margin-bottom: 2rem; }
-        label { display: block; margin-top: 1rem; font-size: 0.9rem; color: #aaa; }
-        input, textarea, select { width: 100%; padding: 12px; margin-top: 5px; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; box-sizing: border-box; }
-        .btn-submit { background: var(--accent); color: #000; font-weight: bold; border: none; padding: 15px; width: 100%; border-radius: 30px; cursor: pointer; transition: 0.3s; margin-top: 2rem; font-size: 1rem; }
-        .btn-submit:hover { box-shadow: 0 0 20px var(--accent); transform: translateY(-2px); }
-        footer { padding: 2rem; text-align: center; font-size: 0.8rem; color: #444; border-top: 1px solid rgba(255,255,255,0.05); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap');
+        :root { --bg: #05050a; --accent: #00ccff; --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.1); }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        
+        /* 究極の背景 */
+        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 0%, #101530 0%, #05050a 100%); z-index: -1; }
+
+        header { padding: 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); backdrop-filter: blur(20px); }
+        .logo { font-weight: 700; letter-spacing: 5px; font-size: 1.5rem; text-decoration: none; color: #fff; }
+        .logo span { color: var(--accent); }
+
+        .container { max-width: 800px; margin: 5rem auto; padding: 0 20px; }
+        .form-card { background: var(--glass); border: 1px solid var(--border); border-radius: 30px; padding: 4rem; backdrop-filter: blur(40px); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        
+        h1 { font-size: 3rem; font-weight: 200; margin-bottom: 1rem; letter-spacing: -1px; text-align: center; }
+        p.subtitle { text-align: center; color: #888; margin-bottom: 3rem; }
+
+        /* セレクター（法人/個人） */
+        .type-selector { display: flex; background: rgba(0,0,0,0.3); border-radius: 50px; padding: 5px; margin-bottom: 3rem; border: 1px solid var(--border); }
+        .type-btn { flex: 1; padding: 15px; border-radius: 50px; border: none; background: transparent; color: #666; cursor: pointer; transition: 0.4s; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; }
+        .type-btn.active { background: var(--accent); color: #000; box-shadow: 0 0 20px rgba(0, 204, 255, 0.4); }
+
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+        .input-group { margin-bottom: 25px; position: relative; }
+        label { display: block; font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; font-weight: 700; }
+        
+        input, textarea, select { 
+            width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 15px; color: #fff; font-size: 1rem; transition: 0.3s; box-sizing: border-box; 
+        }
+        input:focus, textarea:focus { border-color: var(--accent); background: rgba(255,255,255,0.05); outline: none; box-shadow: 0 0 15px rgba(0, 204, 255, 0.1); }
+
+        .btn-submit { 
+            background: linear-gradient(45deg, #00ccff, #0066ff); color: #fff; border: none; padding: 20px; width: 100%; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.4s; margin-top: 2rem; text-transform: uppercase; letter-spacing: 3px;
+        }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 204, 255, 0.4); }
+
+        #corporate-fields { display: block; }
+        .hidden { display: none !important; }
+
+        #feedback { margin-top: 2rem; padding: 20px; border-radius: 15px; text-align: center; display: none; font-weight: 700; }
     </style>
 </head>
 <body>
-<header>
-    <a href="index.html" style="text-decoration: none; color: #fff; font-weight: bold; font-size: 1.5rem; letter-spacing: 2px;">NOVE<span style="color:var(--accent)">OS</span></a>
-</header>
-<main>
-    <div class="form-container">
-        <h1>お問い合わせ</h1>
-        <!-- 
-             根本的解決: 
-             1. action を Formspree の絶対URLに固定 (404を物理的に回避)
-             2. JavaScript による妨害を排除 (確実に送信)
-        -->
-        <form action="https://formspree.io/f/mbdpvwey" method="POST">
-            <input type="hidden" name="_subject" value="NoveOS.jp お問い合わせ">
-            <input type="hidden" name="_language" value="ja">
-            <input type="hidden" name="_next" value="https://noveos.jp/index.html">
+    <div class="bg-glow"></div>
+    <header>
+        <a href="index.html" class="logo">NOVE<span>OS</span></a>
+        <div style="font-size: 0.7rem; letter-spacing: 3px; opacity: 0.5;">V34 MASTER GATE</div>
+    </header>
 
-            <label>氏名 *</label>
-            <input type="text" name="name" required placeholder="お名前">
+    <div class="container">
+        <div class="form-card">
+            <h1>Get in Touch</h1>
+            <p class="subtitle">次世代の演算能力と、絶対的な防衛。専門チームが対応いたします。</p>
 
-            <label>メールアドレス *</label>
-            <input type="email" name="email" required placeholder="email@example.com">
+            <div class="type-selector">
+                <button class="type-btn active" onclick="toggleType('corporate')">法人のお客様</button>
+                <button class="type-btn" onclick="toggleType('individual')">個人のお客様</button>
+            </div>
 
-            <label>所属・組織</label>
-            <input type="text" name="company" placeholder="会社名など">
+            <div id="feedback"></div>
 
-            <label>お問い合わせ内容 *</label>
-            <select name="plan">
-                <option value="Personal">Personal Plan について</option>
-                <option value="Defense">Defense Grade について</option>
-                <option value="Ultimate">Ultimate Beyond (極秘案件) について</option>
-                <option value="Other">その他</option>
-            </select>
+            <form id="contactForm" action="https://formspree.io/f/mbdpvwey" method="POST" onsubmit="return handleFormSubmit(event)">
+                <input type="hidden" name="_subject" value="NoveOS.jp 新しいお問い合わせ">
+                <input type="hidden" id="user-type-hidden" name="category" value="法人">
 
-            <label>メッセージ *</label>
-            <textarea name="message" rows="5" required placeholder="メッセージを入力してください"></textarea>
+                <!-- 法人専用フィールド -->
+                <div id="corporate-fields">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label>貴社名</label>
+                            <input type="text" name="company_name" placeholder="株式会社 NOVE">
+                        </div>
+                        <div class="input-group">
+                            <label>部署名</label>
+                            <input type="text" name="department" placeholder="技術開発部">
+                        </div>
+                    </div>
+                </div>
 
-            <button type="submit" class="btn-submit">送信する (V34 Secure)</button>
-        </form>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>ご担当者様名</label>
+                        <input type="text" name="name" required placeholder="川口 裕治朗">
+                    </div>
+                    <div class="input-group">
+                        <label>メールアドレス</label>
+                        <input type="email" name="email" required placeholder="contact@noveos.jp">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>お問い合わせ項目</label>
+                    <select name="plan">
+                        <option value="Defense">Defense Grade (防衛・インフラ)</option>
+                        <option value="Ultimate">Ultimate Beyond (極秘・カスタム)</option>
+                        <option value="Personal">Personal Pro (個人・開発者)</option>
+                        <option value="Partnership">パートナーシップ提携</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>メッセージ</label>
+                    <textarea name="message" rows="6" required placeholder="具体的なご要件、または技術的なご相談内容をご記入ください。"></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submitBtn">Request Access</button>
+            </form>
+        </div>
     </div>
-</main>
-<footer>
-    &copy; 2026 NOVE INFINITY PROJECT.
-</footer>
+
+    <script>
+        function toggleType(type) {
+            const corpFields = document.getElementById('corporate-fields');
+            const btns = document.querySelectorAll('.type-btn');
+            const typeHidden = document.getElementById('user-type-hidden');
+
+            if (type === 'corporate') {
+                corpFields.classList.remove('hidden');
+                btns[0].classList.add('active');
+                btns[1].classList.remove('active');
+                typeHidden.value = '法人';
+            } else {
+                corpFields.classList.add('hidden');
+                btns[0].classList.remove('active');
+                btns[1].classList.add('active');
+                typeHidden.value = '個人';
+            }
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            var form = document.getElementById('contactForm');
+            var btn = document.getElementById('submitBtn');
+            var fb = document.getElementById('feedback');
+            
+            btn.disabled = true;
+            btn.textContent = 'TRANSMITTING...';
+            fb.style.display = 'none';
+
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            }).then(function(res) {
+                if (res.ok) {
+                    fb.innerText = "✅ 送信が完了しました。担当者より折り返しご連絡いたします。";
+                    fb.style.background = "rgba(0, 255, 170, 0.1)";
+                    fb.style.color = "#00ffaa";
+                    fb.style.display = "block";
+                    form.reset();
+                } else { throw new Error(); }
+            }).catch(function() {
+                fb.innerText = "❌ 通信エラーが発生しました。時間を置いて再度お試しください。";
+                fb.style.background = "rgba(255, 51, 102, 0.1)";
+                fb.style.color = "#ff3366";
+                fb.style.display = "block";
+            }).finally(function() {
+                btn.disabled = false;
+                btn.textContent = 'Request Access';
+            });
+            return false;
+        }
+    </script>
 </body>
 </html>
